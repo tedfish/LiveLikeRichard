@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Live Like Richard - Honoring Richard Ham's legacy through charitable giving and community impact">
+    <title>Live Like Richard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Header -->
+    <header class="top-header">
+        <a href="#hour-00" class="logo">Live Like Richard</a>
+        <nav class="top-nav">
+            <a href="#hour-06">About</a>
+            <a href="#hour-09">Mission</a>
+            <a href="#hour-16">Events</a>
+            <a href="#hour-21" class="btn-donate">Donate</a>
+        </nav>
+    </header>
+
+    <!-- Vertical Hour Navigation -->
+    <nav class="hour-nav" id="hourNav">
+        <a href="#hour-06" class="hour-item" data-hour="6">
+            <span class="hour-icon">☀️</span>
+            <span class="hour-time">6:00 AM</span>
+        </a>
+        <a href="#hour-07" class="hour-item" data-hour="7">
+            <span class="hour-icon">☀️</span>
+            <span class="hour-time">7:00 AM</span>
+        </a>
+        <a href="#hour-08" class="hour-item" data-hour="8">
+            <span class="hour-icon">☀️</span>
+            <span class="hour-time">8:00 AM</span>
+        </a>
+        <a href="#hour-09" class="hour-item" data-hour="9">
+            <span class="hour-icon">☀️</span>
+            <span class="hour-time">9:00 AM</span>
+        </a>
+        <a href="#hour-10" class="hour-item" data-hour="10">
+            <span class="hour-icon">☀️</span>
+            <span class="hour-time">10:00 AM</span>
+        </a>
+        <a href="#hour-11" class="hour-item" data-hour="11">
+            <span class="hour-icon">☀️</span>
+            <span class="hour-time">11:00 AM</span>
+        </a>
+        <a href="#hour-12" class="hour-item" data-hour="12">
+            <span class="hour-icon">☀️</span>
+            <span class="hour-time">12:00 PM</span>
+        </a>
+        <a href="#hour-13" class="hour-item" data-hour="13">
+            <span class="hour-icon">☀️</span>
+            <span class="hour-time">1:00 PM</span>
+        </a>
+        <a href="#hour-14" class="hour-item" data-hour="14">
+            <span class="hour-icon">☀️</span>
+            <span class="hour-time">2:00 PM</span>
+        </a>
+        <a href="#hour-15" class="hour-item" data-hour="15">
+            <span class="hour-icon">☀️</span>
+            <span class="hour-time">3:00 PM</span>
+        </a>
+        <a href="#hour-16" class="hour-item" data-hour="16">
+            <span class="hour-icon">☀️</span>
+            <span class="hour-time">4:00 PM</span>
+        </a>
+        <a href="#hour-17" class="hour-item" data-hour="17">
+            <span class="hour-icon">☀️</span>
+            <span class="hour-time">5:00 PM</span>
+        </a>
+        <a href="#hour-18" class="hour-item" data-hour="18">
+            <span class="hour-icon">☀️</span>
+            <span class="hour-time">6:00 PM</span>
+        </a>
+        <a href="#hour-19" class="hour-item" data-hour="19">
+            <span class="hour-icon">🌙</span>
+            <span class="hour-time">7:00 PM</span>
+        </a>
+        <a href="#hour-20" class="hour-item" data-hour="20">
+            <span class="hour-icon">🌙</span>
+            <span class="hour-time">8:00 PM</span>
+        </a>
+        <a href="#hour-21" class="hour-item" data-hour="21">
+            <span class="hour-icon">🌙</span>
+            <span class="hour-time">9:00 PM</span>
+        </a>
+        <a href="#hour-22" class="hour-item" data-hour="22">
+            <span class="hour-icon">🌙</span>
+            <span class="hour-time">10:00 PM</span>
+        </a>
+        <a href="#hour-23" class="hour-item" data-hour="23">
+            <span class="hour-icon">🌙</span>
+            <span class="hour-time">11:00 PM</span>
+        </a>
+        <a href="#hour-00" class="hour-item" data-hour="0">
+            <span class="hour-icon">🌙</span>
+            <span class="hour-time">12:00 AM</span>
+        </a>
+        <a href="#hour-01" class="hour-item" data-hour="1">
+            <span class="hour-icon">🌙</span>
+            <span class="hour-time">1:00 AM</span>
+        </a>
+        <a href="#hour-02" class="hour-item" data-hour="2">
+            <span class="hour-icon">🌙</span>
+            <span class="hour-time">2:00 AM</span>
+        </a>
+        <a href="#hour-03" class="hour-item" data-hour="3">
+            <span class="hour-icon">🌙</span>
+            <span class="hour-time">3:00 AM</span>
+        </a>
+        <a href="#hour-04" class="hour-item" data-hour="4">
+            <span class="hour-icon">🌙</span>
+            <span class="hour-time">4:00 AM</span>
+        </a>
+        <a href="#hour-05" class="hour-item" data-hour="5">
+            <span class="hour-icon">🌙</span>
+            <span class="hour-time">5:00 AM</span>
+        </a>
+    </nav>
+
+    <!-- Fixed Sky Background -->
+    <div class="sky-background">
+        <div class="sky-timelapse">
+            <!-- Sky images will be loaded dynamically -->
+        </div>
+    </div>
+
+    <!-- Hour 06: 6:00 AM - About Richard -->
+    <section id="hour-06" class="hour-section" data-hour="6">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">About Richard Ham</h2>
+                <p class="section-text">
+                    Richard Ham lived a life of extraordinary generosity, compassion, and community impact. 
+                    A devoted family man, business leader, and philanthropist, Richard believed in the power 
+                    of giving back and supporting those in need.
+                </p>
+                <div class="hour-label">6:00 AM - Sunrise</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 07: 7:00 AM -->
+    <section id="hour-07" class="hour-section" data-hour="7">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">Morning Inspiration</h2>
+                <p class="section-text">"Do what you can" - Richard's favorite saying reminds us that every contribution matters.</p>
+                <div class="hour-label">7:00 AM</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 08: 8:00 AM -->
+    <section id="hour-08" class="hour-section" data-hour="8">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">A Day of Purpose</h2>
+                <p class="section-text">Richard was honored as a "Miracle Maker" for his tireless dedication to charitable causes.</p>
+                <div class="hour-label">8:00 AM</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 09: 9:00 AM - Mission -->
+    <section id="hour-09" class="hour-section" data-hour="9">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">Our Mission</h2>
+                <p class="section-text">
+                    The Live Like Richard foundation grows a fund from contributions made through events and donations. 
+                    These funds support boots-on-the-ground organizations making real impact in our community.
+                </p>
+                <div class="hour-label">9:00 AM</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 10: 10:00 AM -->
+    <section id="hour-10" class="hour-section" data-hour="10">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">Community Impact</h2>
+                <div class="mission-icon">🤝</div>
+                <p class="section-text">Supporting local organizations that make a direct difference in people's lives.</p>
+                <div class="hour-label">10:00 AM</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 11: 11:00 AM -->
+    <section id="hour-11" class="hour-section" data-hour="11">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">Education</h2>
+                <div class="mission-icon">🎓</div>
+                <p class="section-text">Providing scholarships for elementary and college students, with emphasis on hospitality.</p>
+                <div class="hour-label">11:00 AM</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 12: Noon - Healthcare -->
+    <section id="hour-12" class="hour-section" data-hour="12">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">Healthcare</h2>
+                <div class="mission-icon">❤️</div>
+                <p class="section-text">Supporting cancer treatment and organizations helping terminally ill children.</p>
+                <div class="hour-label">12:00 PM - Noon</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 13: 1:00 PM - Partners -->
+    <section id="hour-13" class="hour-section" data-hour="13">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">Our Partners</h2>
+                <p class="section-text">OC Community Foundation - Managing funds and ensuring transparency in charitable giving.</p>
+                <div class="hour-label">1:00 PM</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 14: 2:00 PM -->
+    <section id="hour-14" class="hour-section" data-hour="14">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">Miracles for Kids</h2>
+                <p class="section-text">Supporting families with terminally ill children, similar to St. Jude's.</p>
+                <div class="hour-label">2:00 PM</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 15: 3:00 PM -->
+    <section id="hour-15" class="hour-section" data-hour="15">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">Hoag Cancer Treatment</h2>
+                <p class="section-text">Providing critical support for cancer patients and their families.</p>
+                <div class="hour-label">3:00 PM</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 16: 4:00 PM - Events -->
+    <section id="hour-16" class="hour-section" data-hour="16">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">Upcoming Events</h2>
+                <p class="section-text">Huntington Club Golf Event - Join us for a scramble and auction fundraiser.</p>
+                <p class="event-price">$2,000 for 4 persons</p>
+                <div class="hour-label">4:00 PM</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 17: 5:00 PM - Golden Hour -->
+    <section id="hour-17" class="hour-section" data-hour="17">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">Golden Hour</h2>
+                <p class="section-text">The magic hour - a time for reflection and gratitude.</p>
+                <div class="hour-label">5:00 PM - Golden Hour</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 18: 6:00 PM - Sunset -->
+    <section id="hour-18" class="hour-section" data-hour="18">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">Gallery</h2>
+                <p class="section-text">Celebrating Richard's legacy and our community impact.</p>
+                <div class="hour-label">6:00 PM - Sunset</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 19: 7:00 PM -->
+    <section id="hour-19" class="hour-section" data-hour="19">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">Share Your Story</h2>
+                <p class="section-text">Tell us how Richard inspired you or how you're living like Richard.</p>
+                <div class="hour-label">7:00 PM - Dusk</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 20: 8:00 PM -->
+    <section id="hour-20" class="hour-section" data-hour="20">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">Community Stories</h2>
+                <p class="section-text">Real stories of impact and inspiration from our community.</p>
+                <div class="hour-label">8:00 PM</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 21: 9:00 PM - Donate -->
+    <section id="hour-21" class="hour-section" data-hour="21">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">Make a Difference</h2>
+                <p class="section-text">Your contribution helps us continue Richard's legacy of giving.</p>
+                <a href="https://www.oc-cf.org" target="_blank" rel="noopener" class="btn-donate-large">Donate Now</a>
+                <div class="hour-label">9:00 PM</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 22: 10:00 PM - Stay Connected -->
+    <section id="hour-22" class="hour-section" data-hour="22">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">Stay Connected</h2>
+                <p class="section-text">Subscribe for updates on events, impact stories, and ways to get involved.</p>
+                <div class="hour-label">10:00 PM</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 23: 11:00 PM - Closing -->
+    <section id="hour-23" class="hour-section" data-hour="23">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">Everything's Gonna Be Alright</h2>
+                <p class="section-text">As the day comes to a close, Richard's spirit of generosity lives on.</p>
+                <p class="hero-quote">"Do what you can"</p>
+                <div class="hour-label">11:00 PM</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 00: Midnight - Hero -->
+    <section id="hour-00" class="hour-section" data-hour="0">
+        <div class="container">
+            <div class="hour-content">
+                <h1 class="hero-title">Live Like Richard</h1>
+                <p class="hero-subtitle">Everything's Gonna Be Alright</p>
+                <p class="hero-quote">"Do what you can"</p>
+                <div class="hour-label">Midnight - 12:00 AM</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 01: 1:00 AM -->
+    <section id="hour-01" class="hour-section" data-hour="1">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">The Quiet Hours</h2>
+                <p class="section-text">In the stillness of night, we reflect on Richard's legacy of compassion.</p>
+                <div class="hour-label">1:00 AM</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 02: 2:00 AM -->
+    <section id="hour-02" class="hour-section" data-hour="2">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">Rest & Renewal</h2>
+                <p class="section-text">Even in the darkest hours, hope and healing persist.</p>
+                <div class="hour-label">2:00 AM</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 03: 3:00 AM -->
+    <section id="hour-03" class="hour-section" data-hour="3">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">Before Dawn</h2>
+                <p class="section-text">The promise of a new day approaches.</p>
+                <div class="hour-label">3:00 AM</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 04: 4:00 AM -->
+    <section id="hour-04" class="hour-section" data-hour="4">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">First Light</h2>
+                <p class="section-text">As the world awakens, so does opportunity to make a difference.</p>
+                <div class="hour-label">4:00 AM</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hour 05: 5:00 AM -->
+    <section id="hour-05" class="hour-section" data-hour="5">
+        <div class="container">
+            <div class="hour-content">
+                <h2 class="section-title">Dawn's Promise</h2>
+                <p class="section-text">Every sunrise brings new possibilities for kindness.</p>
+                <div class="hour-label">5:00 AM</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Live Like Richard</h3>
+                    <p>Honoring Richard Ham's legacy through charitable giving and community impact</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#mission">Mission</a></li>
+                        <li><a href="#events">Events</a></li>
+                        <li><a href="#donate">Donate</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Live Like Richard. All rights reserved. | <a href="#" class="accessibility-link">Accessibility</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Audio Player -->
+    <div class="audio-player">
+        <button id="playPauseBtn" class="audio-btn" aria-label="Play music">
+            <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="white">
+                <path d="M8 5v14l11-7z"/>
+            </svg>
+            <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="white" style="display: none;">
+                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+            </svg>
+        </button>
+        <div class="audio-info">Everything's Gonna Be Alright</div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/audio-player.js"></script>
+</body>
+</html>
