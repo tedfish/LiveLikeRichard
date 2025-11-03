@@ -20,7 +20,7 @@
     --background-white: #FFFFFF;
     --overlay-dark: rgba(0, 0, 0, 0.5);
     --overlay-light: rgba(255, 255, 255, 0.95);
-    
+
     /* Typography */
     --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-heading: 'Playfair Display', Georgia, serif;
@@ -29,11 +29,11 @@
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
-    
+
     /* Spacing */
     --section-padding: 100px 0;
     --container-max-width: 1200px;
-    
+
     /* Transitions */
     --transition-smooth: all 0.3s ease;
     --transition-long: all 0.6s ease;
@@ -150,11 +150,11 @@ body {
     cursor: pointer;
     position: relative;
     flex: 0 1 auto;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(8px);
-    border-radius: 8px;
+    /* background: rgba(255, 255, 255, 0.85); */
+    /* backdrop-filter: blur(8px); */
+    /* border-radius: 8px; */
     margin: 0 4px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); */
 }
 
 .hour-item::before {
@@ -164,10 +164,10 @@ body {
     top: 0;
     bottom: 0;
     width: 2px;
-    background: var(--primary-color);
+    /* background: var(--primary-color); */
     opacity: 0;
     transition: opacity 0.2s ease;
-    border-radius: 8px 0 0 8px;
+    /* border-radius: 8px 0 0 8px; */
 }
 
 .hour-item:hover {
@@ -182,29 +182,26 @@ body {
 }
 
 .hour-item.active {
-    background: rgba(74, 144, 226, 0.15);
-    box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+    background: rgba(255, 255, 255, 0.85);
+    /* box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3); */
 }
 
 .hour-icon {
     font-size: 16px;
-    opacity: 0.7;
-    transition: all 0.2s ease;
-    filter: grayscale(0.4);
+    /* opacity set dynamically by JavaScript */
+    transition: opacity 0.3s ease, transform 0.2s ease, filter 0.2s ease;
     flex-shrink: 0;
     width: 18px;
     text-align: center;
 }
 
 .hour-item:hover .hour-icon {
-    opacity: 0.9;
-    filter: grayscale(0);
+    filter: drop-shadow(0 0 3px rgba(255, 200, 0, 0.5));
     transform: scale(1.15);
 }
 
 .hour-item.active .hour-icon {
-    opacity: 1;
-    filter: grayscale(0) drop-shadow(0 0 4px rgba(255, 200, 0, 0.6));
+    filter: drop-shadow(0 0 6px rgba(255, 200, 0, 0.8));
     transform: scale(1.2);
 }
 
@@ -218,10 +215,10 @@ body {
 .hour-time {
     font-size: 0.7rem;
     font-weight: var(--font-weight-semibold);
-    color: var(--text-dark);
+    color: var(--text-light);
     transition: color 0.2s ease;
     line-height: 1;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    /* text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8); */
 }
 
 .hour-label {
@@ -363,6 +360,7 @@ body {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -370,12 +368,19 @@ body {
 }
 
 @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
         transform: translateX(-50%) translateY(0);
     }
+
     40% {
         transform: translateX(-50%) translateY(-10px);
     }
+
     60% {
         transform: translateX(-50%) translateY(-5px);
     }
@@ -535,35 +540,35 @@ body {
         padding: 0 15px 0 70px;
         height: 50px;
     }
-    
+
     .logo {
         font-size: 1.15rem;
     }
-    
+
     .top-nav {
         gap: 15px;
     }
-    
+
     .top-nav a {
         font-size: 0.85rem;
     }
-    
+
     .top-nav a:not(.btn-donate) {
         display: none;
     }
-    
+
     .btn-donate {
         padding: 6px 16px;
         font-size: 0.85rem;
     }
-    
+
     .hour-nav {
         width: 60px;
         padding: 6px 0;
         top: 50px;
         height: calc(100vh - 50px);
     }
-    
+
     .hour-item {
         padding: 6px 4px;
         flex-direction: column;
@@ -571,39 +576,39 @@ body {
         justify-content: center;
         min-height: 28px;
     }
-    
+
     .hour-icon {
         font-size: 16px;
     }
-    
+
     .hour-time {
         font-size: 0.65rem;
     }
-    
+
     .hour-item.active .hour-icon {
         transform: scale(1.2);
     }
-    
+
     .hero-title {
         font-size: 2.8rem;
     }
-    
+
     .hero-subtitle {
         font-size: 1.3rem;
     }
-    
+
     .hero-quote {
         font-size: 1.1rem;
     }
-    
+
     .section-title {
         font-size: 2.5rem;
     }
-    
+
     .section-text {
         font-size: 1.1rem;
     }
-    
+
     .footer-content {
         grid-template-columns: 1fr;
         gap: 30px;
@@ -614,11 +619,11 @@ body {
     .hero-title {
         font-size: 2.2rem;
     }
-    
+
     .section-title {
         font-size: 2rem;
     }
-    
+
     .section-text {
         font-size: 1rem;
     }
@@ -686,6 +691,7 @@ body {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -699,7 +705,7 @@ body {
         right: 20px;
         padding: 10px 16px;
     }
-    
+
     .audio-info {
         font-size: 0.8rem;
         max-width: 150px;
@@ -718,6 +724,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     *,
     *::before,
     *::after {

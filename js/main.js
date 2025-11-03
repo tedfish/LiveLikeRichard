@@ -393,4 +393,139 @@ if ('loading' in HTMLImageElement.prototype) {
     document.body.appendChild(script);
 }
 
+// ========================================
+// Sun/Moon Icon Opacity Simulation
+// ========================================
+
+function updateIconOpacity() {
+    const hourItems = document.querySelectorAll('.hour-item');
+    
+    hourItems.forEach(item => {
+        const hour = parseInt(item.getAttribute('data-hour'));
+        const icon = item.querySelector('.hour-icon');
+        
+        if (!icon) return;
+        
+        let opacity;
+        
+        // Determine opacity based on time of day with more dramatic ranges
+        if (hour >= 6 && hour <= 18) {
+            // Daytime (sun) - 6 AM to 6 PM
+            if (hour === 6) {
+                // Sunrise - very dim
+                opacity = 0.2;
+            } else if (hour === 7) {
+                // Early morning
+                opacity = 0.35;
+            } else if (hour === 8) {
+                // Morning
+                opacity = 0.55;
+            } else if (hour === 9) {
+                // Late morning
+                opacity = 0.75;
+            } else if (hour === 10) {
+                // Pre-noon
+                opacity = 0.9;
+            } else if (hour === 11) {
+                // Almost noon
+                opacity = 0.95;
+            } else if (hour === 12) {
+                // Noon - brightest sun
+                opacity = 1.0;
+            } else if (hour === 13) {
+                // Early afternoon
+                opacity = 1.0;
+            } else if (hour === 14) {
+                // Afternoon
+                opacity = 0.95;
+            } else if (hour === 15) {
+                // Mid afternoon
+                opacity = 0.9;
+            } else if (hour === 16) {
+                // Late afternoon
+                opacity = 0.8;
+            } else if (hour === 17) {
+                // Pre-sunset
+                opacity = 0.65;
+            } else if (hour === 18) {
+                // Sunset - dimming fast
+                opacity = 0.4;
+            }
+        } else {
+            // Nighttime (moon) - 7 PM to 5 AM
+            if (hour === 19) {
+                // Early evening - dim moon
+                opacity = 0.3;
+            } else if (hour === 20) {
+                // Evening
+                opacity = 0.45;
+            } else if (hour === 21) {
+                // Night
+                opacity = 0.6;
+            } else if (hour === 22) {
+                // Late night
+                opacity = 0.75;
+            } else if (hour === 23) {
+                // Pre-midnight
+                opacity = 0.85;
+            } else if (hour === 0) {
+                // Midnight - brightest moon
+                opacity = 1.0;
+            } else if (hour === 1) {
+                // Post-midnight
+                opacity = 0.95;
+            } else if (hour === 2) {
+                // Deep night
+                opacity = 0.85;
+            } else if (hour === 3) {
+                // Pre-dawn
+                opacity = 0.7;
+            } else if (hour === 4) {
+                // Dawn approaching
+                opacity = 0.5;
+            } else if (hour === 5) {
+                // Early dawn - moon fading
+                opacity = 0.25;
+            }
+        }
+        
+        // Apply opacity with transition
+        icon.style.transition = 'opacity 0.3s ease';
+        icon.style.opacity = opacity;
+    });
+}
+
+// Initialize icon opacity on load
+updateIconOpacity();
+
+// Optional: Update icon opacity based on currently visible section
+function updateIconBasedOnScroll() {
+    const sections = document.querySelectorAll('.hour-section');
+    const hourItems = document.querySelectorAll('.hour-item');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const currentHour = entry.target.getAttribute('data-hour');
+                
+                // Add 'active' class to corresponding nav item
+                hourItems.forEach(item => {
+                    if (item.getAttribute('data-hour') === currentHour) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            }
+        });
+    }, {
+        threshold: 0.5
+    });
+    
+    sections.forEach(section => observer.observe(section));
+}
+
+// Initialize scroll-based active state
+updateIconBasedOnScroll();
+
 console.log('Live Like Richard website initialized ✓');
