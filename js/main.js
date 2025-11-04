@@ -4,45 +4,22 @@
 
 class SkyTimeLapse {
     constructor() {
-        this.container = document.querySelector('.sky-timelapse');
+        this.overlay = document.querySelector('.sky-timelapse');
         this.currentHour = 0;
-        this.images = [];
-        this.isInitialized = false;
         this.sections = [];
         
         this.init();
     }
     
     init() {
-        // Load 24 hourly sky images (named 00.jpg through 23.jpg)
-        for (let i = 0; i < 24; i++) {
-            const hour = i.toString().padStart(2, '0');
-            const img = document.createElement('img');
-            img.src = `images/sky/${hour}.jpg`;
-            img.alt = `Sky at ${hour}:00`;
-            img.dataset.hour = i;
-            
-            // Add error handling for missing images
-            img.onerror = () => {
-                console.warn(`Sky image not found: ${hour}.jpg`);
-                img.style.background = this.getTimeBasedGradient(i);
-            };
-            
-            this.container.appendChild(img);
-            this.images.push(img);
-        }
-        
         // Get all hour sections
         this.sections = Array.from(document.querySelectorAll('.hour-section'));
         
-        // Start with the first image
-        if (this.images.length > 0) {
-            this.images[0].classList.add('active');
-            this.isInitialized = true;
-        }
-        
         // Set up scroll listener
         this.setupScrollListener();
+        
+        // Set initial brightness
+        this.updateBrightness(0);
     }
     
     setupScrollListener() {
@@ -74,39 +51,59 @@ class SkyTimeLapse {
             if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
                 const hour = parseInt(section.dataset.hour);
                 if (hour !== this.currentHour) {
-                    this.transitionToHour(hour);
+                    this.updateBrightness(hour);
+                    this.currentHour = hour;
                 }
                 break;
             }
         }
     }
     
-    transitionToHour(hour) {
-        if (hour >= 0 && hour < 24 && hour !== this.currentHour) {
-            // Remove active class from current image
-            this.images[this.currentHour].classList.remove('active');
-            
-            // Add active class to new image
-            this.currentHour = hour;
-            this.images[this.currentHour].classList.add('active');
-        }
-    }
-    
-    // Generate time-appropriate gradient as fallback
-    getTimeBasedGradient(hour) {
-        if (hour >= 5 && hour < 7) {
-            return 'linear-gradient(to bottom, #FF6B6B, #FFA07A, #87CEEB)';
-        } else if (hour >= 7 && hour < 17) {
-            return 'linear-gradient(to bottom, #4A90E2, #87CEEB)';
-        } else if (hour >= 17 && hour < 19) {
-            return 'linear-gradient(to bottom, #FF6B6B, #FF8C42, #4A5568)';
+    updateBrightness(hour) {
+        // Calculate darkness overlay based on time of day
+        let darkness;
+        
+        if (hour >= 6 && hour <= 18) {
+            // Daytime hours (6 AM - 6 PM): lighter
+            if (hour === 12 || hour === 13) {
+                // Noon - brightest (no overlay)
+                darkness = 0;
+            } else if (hour >= 10 && hour <= 15) {
+                // Mid-day - very bright
+                darkness = 0.1;
+            } else if (hour >= 8 && hour <= 16) {
+                // Morning/afternoon - bright
+                darkness = 0.2;
+            } else if (hour === 7 || hour === 17) {
+                // Early morning/late afternoon
+                darkness = 0.35;
+            } else {
+                // Sunrise/sunset (6, 18)
+                darkness = 0.5;
+            }
         } else {
-            return 'linear-gradient(to bottom, #1A202C, #2D3748)';
+            // Nighttime hours: darker
+            if (hour === 0 || hour === 1 || hour === 23) {
+                // Midnight - darkest
+                darkness = 0.8;
+            } else if (hour >= 2 && hour <= 4) {
+                // Deep night
+                darkness = 0.75;
+            } else if (hour === 5 || hour === 19) {
+                // Dawn/dusk
+                darkness = 0.65;
+            } else {
+                // Evening (20-22)
+                darkness = 0.7;
+            }
         }
+        
+        // Apply the darkness overlay
+        this.overlay.style.background = `rgba(0, 0, 0, ${darkness})`;
     }
 }
 
-// Initialize sky background when DOM is ready
+// Initialize sky background brightness control
 let skyTimeLapse;
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {

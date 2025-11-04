@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
 Generate realistic sky images for each hour (00-23)
-Showing a view from a wooden rooftop deck in Laguna Beach
+Overlaying time-of-day lighting effects on the background image
 with sun and moon moving through the sky
 """
 
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image, ImageDraw, ImageFilter, ImageEnhance
 import os
 import math
 
@@ -217,82 +217,84 @@ def draw_stars(draw, width, height, hour, num_stars=150):
         color = (brightness, brightness, brightness, opacity)
         draw.ellipse([x, y, x + size, y + size], fill=color)
 
-def draw_deck(draw, width, height):
-    """Draw wooden deck railing in foreground"""
-    # Deck railing at bottom
-    railing_height = int(height * 0.15)
-    railing_y = height - railing_height
+def get_lighting_adjustment(hour):
+    """Return brightness and color tint adjustments for the hour"""
+    # Returns (brightness_factor, color_overlay_rgb, overlay_opacity)
     
-    # Wood colors
-    wood_dark = (101, 67, 33)
-    wood_light = (139, 90, 43)
-    wood_medium = (120, 78, 38)
+    # Night (0-4): Dark with blue tint
+    if hour in [0, 1, 2, 3, 4]:
+        return (0.15, (5, 15, 40), 0.7)
     
-    # Draw deck floor
-    for i in range(railing_y, height):
-        shade = wood_dark if i % 20 < 10 else wood_medium
-        draw.line([(0, i), (width, i)], fill=shade)
+    # Dawn (5): Starting to lighten, purple-blue tint
+    elif hour == 5:
+        return (0.35, (40, 50, 90), 0.6)
     
-    # Draw vertical posts
-    post_width = 8
-    post_spacing = width // 12
+    # Sunrise (6): Golden warm glow
+    elif hour == 6:
+        return (0.75, (255, 180, 120), 0.4)
     
-    for i in range(13):
-        x = i * post_spacing
-        # Draw post with slight 3D effect
-        draw.rectangle(
-            [x - post_width//2, railing_y, x + post_width//2, height],
-            fill=wood_dark
-        )
-        # Highlight edge
-        draw.line(
-            [(x - post_width//2, railing_y), (x - post_width//2, height)],
-            fill=wood_light,
-            width=2
-        )
+    # Early morning (7): Warm light
+    elif hour == 7:
+        return (0.9, (255, 230, 200), 0.25)
     
-    # Top railing
-    rail_height = 12
-    draw.rectangle(
-        [0, railing_y, width, railing_y + rail_height],
-        fill=wood_dark
-    )
-    # Top highlight
-    draw.rectangle(
-        [0, railing_y, width, railing_y + 3],
-        fill=wood_light
-    )
+    # Morning to afternoon (8-15): Full brightness, minimal tint
+    elif 8 <= hour <= 15:
+        return (1.0, (255, 255, 250), 0.1)
+    
+    # Late afternoon (16): Slight warm tint
+    elif hour == 16:
+        return (0.95, (255, 240, 220), 0.15)
+    
+    # Golden hour (17): Beautiful golden light
+    elif hour == 17:
+        return (0.85, (255, 200, 140), 0.35)
+    
+    # Sunset (18): Rich warm colors
+    elif hour == 18:
+        return (0.65, (255, 140, 100), 0.5)
+    
+    # Dusk (19): Purple hour
+    elif hour == 19:
+        return (0.4, (120, 80, 140), 0.6)
+    
+    # Evening (20-23): Deep blue night
+    else:
+        return (0.2, (15, 20, 50), 0.7)
+
+# Load the background image
+background_path = "images/richard-main.jpg"
+if not os.path.exists(background_path):
+    print(f"Error: Background image not found at {background_path}")
+    print("Please ensure richard-main.jpg exists in the images/ directory")
+    exit(1)
+
+base_img = Image.open(background_path)
+width, height = base_img.size
+print(f"Loaded background image: {width}x{height}")
 
 # Generate images
-width, height = 1920, 1080
-
 for hour in range(24):
     hour_str = str(hour).zfill(2)
     
-    # Create new image with RGBA for transparency support
-    img = Image.new('RGBA', (width, height))
-    draw = ImageDraw.Draw(img, 'RGBA')
+    # Start with a copy of the background image
+    img = base_img.copy().convert('RGBA')
     
-    # Get colors for this hour
-    top_color, mid_color, bottom_color = get_sky_colors(hour)
+    # Get lighting adjustments for this hour
+    brightness, tint_color, tint_opacity = get_lighting_adjustment(hour)
     
-    # Draw gradient (three-color gradient for more realism)
-    for y in range(height):
-        if y < height // 2:
-            # Top half: blend top to mid
-            factor = (y / (height // 2))
-            r = int(top_color[0] + (mid_color[0] - top_color[0]) * factor)
-            g = int(top_color[1] + (mid_color[1] - top_color[1]) * factor)
-            b = int(top_color[2] + (mid_color[2] - top_color[2]) * factor)
-        else:
-            # Bottom half: blend mid to bottom
-            factor = ((y - height // 2) / (height // 2))
-            r = int(mid_color[0] + (bottom_color[0] - mid_color[0]) * factor)
-            g = int(mid_color[1] + (bottom_color[1] - mid_color[1]) * factor)
-            b = int(mid_color[2] + (bottom_color[2] - mid_color[2]) * factor)
-        
-        # Draw horizontal line
-        draw.line([(0, y), (width, y)], fill=(r, g, b))
+    # Adjust brightness
+    enhancer = ImageEnhance.Brightness(img)
+    img = enhancer.enhance(brightness)
+    
+    # Create color overlay layer
+    overlay = Image.new('RGBA', (width, height), tint_color + (int(255 * tint_opacity),))
+    
+    # Blend the overlay with the image
+    img = Image.alpha_composite(img, overlay)
+    
+    # Create a transparent layer for sky elements (sun/moon/stars)
+    sky_layer = Image.new('RGBA', (width, height), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(sky_layer, 'RGBA')
     
     # Add stars for night hours
     draw_stars(draw, width, height, hour)
@@ -307,24 +309,8 @@ for hour in range(24):
     if moon_pos:
         draw_moon(draw, width, height, moon_pos, hour)
     
-    # Draw wooden deck railing in foreground
-    draw_deck(draw, width, height)
-    
-    # Add some clouds for daytime
-    if 7 <= hour <= 18:
-        # Simple wispy clouds
-        cloud_color = (255, 255, 255, 60) if hour < 17 else (255, 200, 180, 80)
-        import random
-        random.seed(hour)  # Consistent clouds per hour
-        
-        for _ in range(random.randint(3, 7)):
-            cx = random.randint(100, width - 100)
-            cy = random.randint(50, height // 3)
-            cw = random.randint(120, 250)
-            ch = random.randint(40, 80)
-            
-            draw.ellipse([cx - cw//2, cy - ch//2, cx + cw//2, cy + ch//2], fill=cloud_color)
-            draw.ellipse([cx - cw//3, cy - ch//3, cx + cw//3, cy + ch//3], fill=cloud_color)
+    # Composite sky elements onto the image
+    img = Image.alpha_composite(img, sky_layer)
     
     # Convert to RGB for JPEG
     img_rgb = img.convert('RGB')
@@ -335,7 +321,17 @@ for hour in range(24):
     # Save image
     output_path = os.path.join(sky_dir, f"{hour_str}.jpg")
     img_rgb.save(output_path, 'JPEG', quality=90, optimize=True)
-    print(f"Generated {output_path} - {'Sun' if sun_pos else 'Moon' if moon_pos else 'Stars'} visible")
+    
+    elements = []
+    if sun_pos:
+        elements.append('Sun')
+    if moon_pos:
+        elements.append('Moon')
+    if not sun_pos and not moon_pos:
+        elements.append('Stars')
+    
+    print(f"Generated {output_path} - Brightness: {brightness:.2f}, {', '.join(elements)}")
 
 print(f"\n✓ Successfully generated 24 sky images in {sky_dir}/")
 print("Images range from 00.jpg (midnight) to 23.jpg (11 PM)")
+print("Each image overlays time-of-day lighting on richard-main.jpg")
