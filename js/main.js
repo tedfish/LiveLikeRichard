@@ -114,83 +114,14 @@ if (document.readyState === 'loading') {
 }
 
 // ========================================
-// Full-Page Scrolling
+// Section Tracking (CSS Scroll Snap handles scrolling)
 // ========================================
 
-let isScrolling = false;
 let currentSection = 0;
 const sections = document.querySelectorAll('.hour-section');
-let scrollTimeout;
-
-function scrollToSection(index) {
-    if (index < 0 || index >= sections.length) return;
-    
-    isScrolling = true;
-    currentSection = index;
-    
-    sections[index].scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-    });
-    
-    // Reset scrolling flag after animation
-    setTimeout(() => {
-        isScrolling = false;
-    }, 1000);
-}
-
-// Handle wheel/trackpad scrolling
-function handleWheel(e) {
-    if (isScrolling) {
-        e.preventDefault();
-        return;
-    }
-    
-    // Clear previous timeout
-    clearTimeout(scrollTimeout);
-    
-    // Set new timeout to detect end of scroll
-    scrollTimeout = setTimeout(() => {
-        const direction = e.deltaY > 0 ? 1 : -1;
-        const nextSection = currentSection + direction;
-        
-        if (nextSection >= 0 && nextSection < sections.length) {
-            scrollToSection(nextSection);
-        }
-    }, 50);
-}
-
-// Handle keyboard navigation
-function handleKeydown(e) {
-    if (isScrolling) return;
-    
-    switch(e.key) {
-        case 'ArrowDown':
-        case 'PageDown':
-        case ' ': // Space
-            e.preventDefault();
-            scrollToSection(currentSection + 1);
-            break;
-        case 'ArrowUp':
-        case 'PageUp':
-            e.preventDefault();
-            scrollToSection(currentSection - 1);
-            break;
-        case 'Home':
-            e.preventDefault();
-            scrollToSection(0);
-            break;
-        case 'End':
-            e.preventDefault();
-            scrollToSection(sections.length - 1);
-            break;
-    }
-}
 
 // Update current section based on scroll position
 function updateCurrentSection() {
-    if (isScrolling) return;
-    
     const scrollPosition = window.scrollY + window.innerHeight / 2;
     
     sections.forEach((section, index) => {
@@ -203,13 +134,43 @@ function updateCurrentSection() {
     });
 }
 
+
+// Handle keyboard navigation
+function handleKeydown(e) {
+    switch(e.key) {
+        case 'ArrowDown':
+        case 'PageDown':
+        case ' ': // Space
+            e.preventDefault();
+            if (currentSection < sections.length - 1) {
+                sections[currentSection + 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            break;
+        case 'ArrowUp':
+        case 'PageUp':
+            e.preventDefault();
+            if (currentSection > 0) {
+                sections[currentSection - 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            break;
+        case 'Home':
+            e.preventDefault();
+            sections[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+            break;
+        case 'End':
+            e.preventDefault();
+            sections[sections.length - 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
+            break;
+    }
+}
+
 // Attach event listeners
-window.addEventListener('wheel', handleWheel, { passive: false });
 window.addEventListener('keydown', handleKeydown);
-window.addEventListener('scroll', updateCurrentSection);
+window.addEventListener('scroll', updateCurrentSection, { passive: true });
 
 // Initialize current section
 updateCurrentSection();
+
 
 // ========================================
 // Smooth Scrolling & Navigation
@@ -227,12 +188,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         
         const target = document.querySelector(href);
         if (target) {
-            const navHeight = document.querySelector('.nav').offsetHeight;
-            const targetPosition = target.offsetTop - navHeight;
-            
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
             });
         }
     });
@@ -243,20 +201,22 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // ========================================
 
 let lastScrollTop = 0;
-const navbar = document.getElementById('navbar');
+const navbar = document.querySelector('.top-header');
 
-window.addEventListener('scroll', () => {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    
-    // Add shadow when scrolled
-    if (scrollTop > 50) {
-        navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.15)';
-    } else {
-        navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
-    }
-    
-    lastScrollTop = scrollTop;
-});
+if (navbar) {
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Add shadow when scrolled
+        if (scrollTop > 50) {
+            navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.15)';
+        } else {
+            navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.08)';
+        }
+        
+        lastScrollTop = scrollTop;
+    }, { passive: true });
+}
 
 // ========================================
 // Hour Navigation
