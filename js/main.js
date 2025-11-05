@@ -171,28 +171,151 @@ window.addEventListener('scroll', updateCurrentSection, { passive: true });
 // Initialize current section
 updateCurrentSection();
 
+// ========================================
+// Initialize fullPage.js
+// ========================================
+
+let fullPageInstance = null;
+
+window.addEventListener('DOMContentLoaded', () => {
+    if (typeof fullpage !== 'undefined' && fullpage.default) {
+        // fullpage.js v4 uses ES6 modules, access via .default
+        fullPageInstance = new fullpage.default('#fullpage', {
+            licenseKey: 'YOUR_LICENSE_KEY',
+            autoScrolling: true,
+            scrollHorizontally: false,
+            navigation: false,
+            scrollingSpeed: 1000,
+            fitToSection: true,
+            fitToSectionDelay: 1000,
+            easingcss3: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
+            scrollBar: false,
+            css3: true,
+            verticalCentered: true,
+            
+            onLeave: function(origin, destination, direction) {
+                // Add leaving animation
+                origin.item.classList.add('leaving');
+            },
+            
+            afterLoad: function(origin, destination, direction) {
+                // Remove leaving animation from previous section
+                if (origin) {
+                    origin.item.classList.remove('leaving');
+                }
+                
+                // Add entering animation
+                destination.item.classList.add('entering');
+                setTimeout(() => {
+                    destination.item.classList.remove('entering');
+                }, 1000);
+                
+                // Update sky brightness when section changes
+                const hour = parseInt(destination.item.dataset.hour);
+                if (skyTimeLapse && hour >= 0) {
+                    skyTimeLapse.updateBrightness(hour);
+                }
+                
+                // Update hour nav active state
+                const hourItems = document.querySelectorAll('.hour-item');
+                hourItems.forEach(item => {
+                    if (item.dataset.hour === destination.item.dataset.hour) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            }
+        });
+    } else if (typeof fullpage === 'function') {
+        // Try direct constructor if not a module
+        fullPageInstance = new fullpage('#fullpage', {
+            licenseKey: 'YOUR_LICENSE_KEY',
+            autoScrolling: true,
+            scrollHorizontally: false,
+            navigation: false,
+            scrollingSpeed: 1000,
+            fitToSection: true,
+            fitToSectionDelay: 1000,
+            easingcss3: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
+            scrollBar: false,
+            css3: true,
+            verticalCentered: true,
+            
+            onLeave: function(origin, destination, direction) {
+                // Add leaving animation
+                origin.item.classList.add('leaving');
+            },
+            
+            afterLoad: function(origin, destination, direction) {
+                // Remove leaving animation from previous section
+                if (origin) {
+                    origin.item.classList.remove('leaving');
+                }
+                
+                // Add entering animation
+                destination.item.classList.add('entering');
+                setTimeout(() => {
+                    destination.item.classList.remove('entering');
+                }, 1000);
+                
+                const hour = parseInt(destination.item.dataset.hour);
+                if (skyTimeLapse && hour >= 0) {
+                    skyTimeLapse.updateBrightness(hour);
+                }
+                
+                const hourItems = document.querySelectorAll('.hour-item');
+                hourItems.forEach(item => {
+                    if (item.dataset.hour === destination.item.dataset.hour) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            }
+        });
+    }
+});
 
 // ========================================
 // Smooth Scrolling & Navigation
 // ========================================
 
-// Handle navigation smooth scrolling
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        
-        // Ignore empty hash links
-        if (href === '#' || !href) return;
-        
-        e.preventDefault();
-        
-        const target = document.querySelector(href);
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
+// Handle top navigation with fullpage.js (excluding hour nav)
+document.addEventListener('DOMContentLoaded', () => {
+    // Map of section IDs to indices
+    const sectionMap = {
+        'hour-05': 1,
+        'hour-07': 2,
+        'hour-09': 3,
+        'hour-11': 4,
+        'hour-13': 5,
+        'hour-15': 6,
+        'hour-17': 7,
+        'hour-19': 8,
+        'hour-21': 9,
+        'hour-23': 10,
+        'hour-01': 11,
+        'hour-03': 12
+    };
+    
+    document.querySelectorAll('.top-nav a[href^="#"], .logo[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            
+            // Ignore empty hash links
+            if (href === '#' || !href) return;
+            
+            e.preventDefault();
+            
+            // Use fullpage.js API to navigate by index
+            const sectionId = href.substring(1); // Remove #
+            const sectionIndex = sectionMap[sectionId];
+            
+            if (typeof fullpage_api !== 'undefined' && sectionIndex) {
+                fullpage_api.moveTo(sectionIndex);
+            }
+        });
     });
 });
 
@@ -222,76 +345,33 @@ if (navbar) {
 // Hour Navigation
 // ========================================
 
-const hourItems = document.querySelectorAll('.hour-item');
-const hourNav = document.querySelector('.hour-nav');
-
-// Handle clicking on hour items
-hourItems.forEach(item => {
-    item.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetHour = item.getAttribute('href').substring(1); // e.g., "hour-06"
-        const targetSection = document.getElementById(targetHour);
-        
-        if (targetSection) {
-            // Update active state
-            hourItems.forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
-            
-            // Smooth scroll to the target section
-            targetSection.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
-
-// Update active hour based on scroll position
-function updateActiveHour() {
-    const scrollPosition = window.scrollY + window.innerHeight / 2;
-    const sections = document.querySelectorAll('.hour-section');
+// Wait for fullpage to initialize before setting up navigation
+setTimeout(() => {
+    const hourItems = document.querySelectorAll('.hour-item');
     
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionBottom = sectionTop + section.offsetHeight;
-        
-        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-            const hour = section.dataset.hour;
-            hourItems.forEach(item => {
-                if (item.dataset.hour === hour) {
-                    hourItems.forEach(i => i.classList.remove('active'));
-                    item.classList.add('active');
-                    
-                    // Auto-scroll nav to show active hour
-                    if (hourNav) {
-                        const itemRect = item.getBoundingClientRect();
-                        const navRect = hourNav.getBoundingClientRect();
-                        const scrollTop = item.offsetTop - (navRect.height / 2) + (itemRect.height / 2);
-                        hourNav.scrollTo({
-                            top: scrollTop,
-                            behavior: 'smooth'
-                        });
-                    }
-                }
-            });
-        }
-    });
-}
-
-// Update on scroll (throttled)
-let hourUpdateTicking = false;
-window.addEventListener('scroll', () => {
-    if (!hourUpdateTicking) {
-        window.requestAnimationFrame(() => {
-            updateActiveHour();
-            hourUpdateTicking = false;
-        });
-        hourUpdateTicking = true;
+    if (!hourItems.length) {
+        console.error('No hour items found');
+        return;
     }
-});
-
-// Initial update
-updateActiveHour();
+    
+    hourItems.forEach((item, index) => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const sectionIndex = parseInt(item.getAttribute('data-section'));
+            
+            // Use section index for navigation
+            if (window.fullpage_api) {
+                window.fullpage_api.moveTo(sectionIndex);
+            } else if (typeof fullpage_api !== 'undefined') {
+                fullpage_api.moveTo(sectionIndex);
+            } else {
+                console.error('fullpage_api not available');
+            }
+        });
+    });
+}, 500);
 
 
 // ========================================

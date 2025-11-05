@@ -274,6 +274,16 @@ body {
     justify-content: center;
     z-index: 1;
     padding: 80px 20px;
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.hour-section.leaving {
+    opacity: 0.3;
+    transform: scale(0.95);
+}
+
+.hour-section.entering .hour-content {
+    animation: slideUpFade 1s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 .hour-content {
@@ -282,6 +292,7 @@ body {
     max-width: 800px;
     text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 0, 0, 0.5);
     animation: fadeInUp 1s ease;
+    transform-origin: center;
 }
 
 .hero-title {
@@ -355,6 +366,20 @@ body {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes slideUpFade {
+    0% {
+        opacity: 0;
+        transform: translateY(60px) scale(0.9);
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
     }
 }
 
@@ -446,10 +471,19 @@ body {
    Footer
    ======================================== */
 
-.footer {
+.footer-section-wrapper {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: var(--text-dark);
+}
+
+.footer {
+    background: transparent;
     color: white;
     padding: 60px 0 30px;
+    width: 100%;
 }
 
 .footer-content {
@@ -712,6 +746,12 @@ body {
 *:focus {
     outline: 2px solid var(--primary-color);
     outline-offset: 2px;
+}
+
+/* Hide fullpage.js watermark */
+#fp-nav,
+.fp-watermark {
+    display: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
