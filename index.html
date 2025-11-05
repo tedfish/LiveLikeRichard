@@ -7,6 +7,7 @@
     <meta name="description"
         content="Live Like Richard - Honoring Richard Ham's legacy through charitable giving and community impact">
     <title>Live Like Richard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullpage.js@4.0.29/dist/fullpage.min.css" />
     <link rel="stylesheet" href="css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,51 +30,51 @@
 
     <!-- Vertical Hour Navigation -->
     <nav class="hour-nav" id="hourNav">
-        <a href="#hour-05" class="hour-item" data-hour="5">
+        <a href="#hour-05" class="hour-item" data-section="1" data-hour="5" data-anchor="hour-05">
             <span class="hour-icon">☀️</span>
             <span class="hour-time">5:00 AM</span>
         </a>
-        <a href="#hour-07" class="hour-item" data-hour="7">
+        <a href="#hour-07" class="hour-item" data-section="2" data-hour="7" data-anchor="hour-07">
             <span class="hour-icon">☀️</span>
             <span class="hour-time">7:00 AM</span>
         </a>
-        <a href="#hour-09" class="hour-item" data-hour="9">
+        <a href="#hour-09" class="hour-item" data-section="3" data-hour="9" data-anchor="hour-09">
             <span class="hour-icon">☀️</span>
             <span class="hour-time">9:00 AM</span>
         </a>
-        <a href="#hour-11" class="hour-item" data-hour="11">
+        <a href="#hour-11" class="hour-item" data-section="4" data-hour="11" data-anchor="hour-11">
             <span class="hour-icon">☀️</span>
             <span class="hour-time">11:00 AM</span>
         </a>
-        <a href="#hour-13" class="hour-item" data-hour="13">
+        <a href="#hour-13" class="hour-item" data-section="5" data-hour="13" data-anchor="hour-13">
             <span class="hour-icon">☀️</span>
             <span class="hour-time">1:00 PM</span>
         </a>
-        <a href="#hour-15" class="hour-item" data-hour="15">
+        <a href="#hour-15" class="hour-item" data-section="6" data-hour="15" data-anchor="hour-15">
             <span class="hour-icon">☀️</span>
             <span class="hour-time">3:00 PM</span>
         </a>
-        <a href="#hour-17" class="hour-item" data-hour="17">
+        <a href="#hour-17" class="hour-item" data-section="7" data-hour="17" data-anchor="hour-17">
             <span class="hour-icon">☀️</span>
             <span class="hour-time">5:00 PM</span>
         </a>
-        <a href="#hour-19" class="hour-item" data-hour="19">
+        <a href="#hour-19" class="hour-item" data-section="8" data-hour="19" data-anchor="hour-19">
             <span class="hour-icon">🌙</span>
             <span class="hour-time">7:00 PM</span>
         </a>
-        <a href="#hour-21" class="hour-item" data-hour="21">
+        <a href="#hour-21" class="hour-item" data-section="9" data-hour="21" data-anchor="hour-21">
             <span class="hour-icon">🌙</span>
             <span class="hour-time">9:00 PM</span>
         </a>
-        <a href="#hour-23" class="hour-item" data-hour="23">
+        <a href="#hour-23" class="hour-item" data-section="10" data-hour="23" data-anchor="hour-23">
             <span class="hour-icon">🌙</span>
             <span class="hour-time">11:00 PM</span>
         </a>
-        <a href="#hour-01" class="hour-item" data-hour="1">
+        <a href="#hour-01" class="hour-item" data-section="11" data-hour="1" data-anchor="hour-01">
             <span class="hour-icon">🌙</span>
             <span class="hour-time">1:00 AM</span>
         </a>
-        <a href="#hour-03" class="hour-item" data-hour="3">
+        <a href="#hour-03" class="hour-item" data-section="12" data-hour="3" data-anchor="hour-03">
             <span class="hour-icon">🌙</span>
             <span class="hour-time">3:00 AM</span>
         </a>
@@ -86,7 +87,8 @@
         </div>
     </div>
 
-    <!-- Main Content -->
+    <!-- Fullpage.js wrapper -->
+    <div id="fullpage">
 
     <!-- Hour 05: 5:00 AM - Dawn -->
     <section id="hour-05" class="hour-section section" data-hour="5">
@@ -205,12 +207,12 @@
     <section id="hour-21" class="hour-section section" data-hour="21">
         <div class="container">
             <div class="hour-content">
+                <div class="hour-label">9:00 PM</div>
                 <h2 class="section-title">Share Your Story</h2>
                 <p class="section-text">
                     Tell us how Richard inspired you or how you're living like Richard. 
                     Real stories of impact and inspiration from our community.
                 </p>
-                <div class="hour-label">9:00 PM</div>
             </div>
         </div>
     </section>
@@ -219,12 +221,12 @@
     <section id="hour-23" class="hour-section section" data-hour="23">
         <div class="container">
             <div class="hour-content">
+                <div class="hour-label">11:00 PM</div>
                 <h2 class="section-title">Make a Difference</h2>
                 <p class="section-text">
                     Your contribution helps us continue Richard's legacy of giving.
                 </p>
                 <a href="https://www.oc-cf.org" target="_blank" rel="noopener" class="btn-donate-large">Donate Now</a>
-                <div class="hour-label">11:00 PM</div>
             </div>
         </div>
     </section>
@@ -233,11 +235,11 @@
     <section id="hour-01" class="hour-section section" data-hour="1">
         <div class="container">
             <div class="hour-content">
+                <div class="hour-label">1:00 AM</div>
                 <h2 class="section-title">Stay Connected</h2>
                 <p class="section-text">
                     Subscribe for updates on events, impact stories, and ways to get involved.
                 </p>
-                <div class="hour-label">1:00 AM</div>
             </div>
         </div>
     </section>
@@ -257,42 +259,7 @@
         </div>
     </section>
 
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Live Like Richard</h3>
-                    <p>Honoring Richard Ham's legacy through charitable giving and community impact</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#mission">Mission</a></li>
-                        <li><a href="#events">Events</a></li>
-                        <li><a href="#donate">Donate</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Follow Us</h4>
-                    <div class="social-links">
-                        <a href="https://www.instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
-                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Live Like Richard. All rights reserved. | <a href="#"
-                        class="accessibility-link">Accessibility</a></p>
-            </div>
-        </div>
-    </footer>
+    </div><!-- End fullpage -->
 
     <!-- Floating Audio Player -->
     <div class="audio-player">
@@ -307,6 +274,7 @@
         <div class="audio-info">Everything's Gonna Be Alright</div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/fullpage.js@4.0.29/dist/fullpage.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/audio-player.js"></script>
 </body>
