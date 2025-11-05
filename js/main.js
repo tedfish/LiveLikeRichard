@@ -276,6 +276,9 @@ window.addEventListener("DOMContentLoaded", () => {
             item.classList.remove("active");
           }
         });
+
+        // Update fixed hour-label-wrapper text
+        updateHourLabel(destination.item);
       },
     });
   } else if (typeof fullpage === "function") {
@@ -307,6 +310,9 @@ window.addEventListener("DOMContentLoaded", () => {
             item.classList.remove("active");
           }
         });
+
+        // Update fixed hour-label-wrapper text
+        updateHourLabel(destination.item);
       },
     });
   }
@@ -438,6 +444,136 @@ document.addEventListener("DOMContentLoaded", () => {
   sections.forEach((section) => {
     observer.observe(section);
   });
+
+  // Initialize hour label
+  setTimeout(() => {
+    const firstSection = document.querySelector(".hour-section");
+    if (firstSection) {
+      updateHourLabel(firstSection);
+    }
+  }, 500);
+});
+
+// ========================================
+// Hour Label Navigation
+// ========================================
+
+// Map of hour values to labels
+const hourLabels = {
+  "5": "5:00 AM - A New Beginning",
+  "7": "7:00 AM - The Early Bird",
+  "9": "9:00 AM - Rolling Up Your Sleeves",
+  "11": "11:00 AM - Breaking Bread",
+  "13": "1:00 PM - Community & Connection",
+  "15": "3:00 PM - Lending a Hand",
+  "17": "5:00 PM - Golden Hour",
+  "19": "7:00 PM - A Fine Meal",
+  "21": "9:00 PM - A Night on the Town",
+  "23": "11:00 PM - The Night is Young",
+  "1": "1:00 AM - The Twilight Years",
+  "3": "3:00 AM - Peaceful Rest"
+};
+
+// Section order for navigation
+const sectionOrder = ["5", "7", "9", "11", "13", "15", "17", "19", "21", "23", "1", "3"];
+let currentSectionIndex = 0;
+
+// ========================================
+// Navigation Helper Function
+// ========================================
+
+function navigateToSection(direction) {
+  console.log(`Navigation requested: ${direction}`);
+  
+  // Wait for API to be available
+  let attempts = 0;
+  const checkAPI = setInterval(() => {
+    attempts++;
+    const api = window.fullpage_api;
+    
+    if (api) {
+      clearInterval(checkAPI);
+      console.log(`API found after ${attempts} attempts, moving ${direction}`);
+      
+      if (direction === 'up') {
+        api.moveSectionUp();
+      } else if (direction === 'down') {
+        api.moveSectionDown();
+      }
+    } else if (attempts >= 60) {
+      // After 3 seconds (60 * 50ms)
+      clearInterval(checkAPI);
+      console.error('fullpage_api not available after 3 seconds');
+    }
+  }, 50); // Check every 50ms
+}
+
+function updateHourLabel(section) {
+  const hourLabelText = document.getElementById("hourLabelText");
+  const navUp = document.getElementById("navUp");
+  const navDown = document.getElementById("navDown");
+  
+  if (hourLabelText && section) {
+    const hour = section.dataset.hour;
+    hourLabelText.textContent = hourLabels[hour] || `Hour ${hour}`;
+    
+    // Update current index
+    currentSectionIndex = sectionOrder.indexOf(hour);
+    
+    // Update tooltips and visibility
+    const prevIndex = currentSectionIndex - 1;
+    const nextIndex = currentSectionIndex + 1;
+    
+    // Handle up arrow
+    if (navUp) {
+      if (prevIndex >= 0) {
+        const prevHour = sectionOrder[prevIndex];
+        navUp.setAttribute("data-tooltip", hourLabels[prevHour]);
+        navUp.style.visibility = "visible";
+        navUp.style.opacity = "0.7";
+      } else {
+        // First section - hide up arrow
+        navUp.style.visibility = "hidden";
+        navUp.style.opacity = "0";
+      }
+    }
+    
+    // Handle down arrow
+    if (navDown) {
+      if (nextIndex < sectionOrder.length) {
+        const nextHour = sectionOrder[nextIndex];
+        navDown.setAttribute("data-tooltip", hourLabels[nextHour]);
+        navDown.style.visibility = "visible";
+        navDown.style.opacity = "0.7";
+      } else {
+        // Last section - hide down arrow
+        navDown.style.visibility = "hidden";
+        navDown.style.opacity = "0";
+      }
+    }
+  }
+}
+
+// Navigation button handlers
+document.addEventListener("DOMContentLoaded", () => {
+  const navUp = document.getElementById("navUp");
+  const navDown = document.getElementById("navDown");
+
+  if (navUp) {
+    navUp.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      navigateToSection('up');
+    });
+  }
+
+  if (navDown) {
+    navDown.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      navigateToSection('down');
+    });
+  }
 });
 
 // ========================================
@@ -609,32 +745,165 @@ function updateIconBasedOnScroll() {
 updateIconBasedOnScroll();
 
 // ========================================
-// Section Navigation Arrows
+// Section Navigation Arrows - Refactored
 // ========================================
 
-window.addEventListener("DOMContentLoaded", () => {
+// Track current section globally
+let currentFullpageSection = 1;
+
+function setupSectionArrows() {
   const upArrows = document.querySelectorAll(".section-nav-up");
   const downArrows = document.querySelectorAll(".section-nav-down");
 
   // Handle up arrow clicks
   upArrows.forEach((arrow) => {
-    arrow.addEventListener("click", (e) => {
+    // Remove any existing listeners by cloning
+    const newArrow = arrow.cloneNode(true);
+    arrow.parentNode.replaceChild(newArrow, arrow);
+    
+    newArrow.addEventListener("click", (e) => {
       e.preventDefault();
-      if (typeof fullpage_api !== "undefined") {
-        fullpage_api.moveSectionUp();
-      }
+      e.stopPropagation();
+      navigateToSection('up');
     });
   });
 
   // Handle down arrow clicks
   downArrows.forEach((arrow) => {
-    arrow.addEventListener("click", (e) => {
+    // Remove any existing listeners by cloning
+    const newArrow = arrow.cloneNode(true);
+    arrow.parentNode.replaceChild(newArrow, arrow);
+    
+    newArrow.addEventListener("click", (e) => {
       e.preventDefault();
-      if (typeof fullpage_api !== "undefined") {
-        fullpage_api.moveSectionDown();
-      }
+      e.stopPropagation();
+      navigateToSection('down');
     });
   });
+}
+
+// Setup arrows immediately and after delay
+window.addEventListener("DOMContentLoaded", () => {
+  setupSectionArrows();
+  // Try again after fullpage initializes
+  setTimeout(setupSectionArrows, 1500);
 });
+
+// ========================================
+// Polaroid Image Loading with Random Selection
+// ========================================
+
+// Gallery of available photos and captions
+const photoGallery = [
+  {
+    src: 'images/gallery/1000s.jpg',
+    captions: [
+      'Living with purpose',
+      'Making a difference',
+      'Every moment counts',
+      'A generous heart',
+      'Inspiring others'
+    ]
+  },
+  {
+    src: 'images/gallery/1000s (1).jpg',
+    captions: [
+      'A life of generosity',
+      'Leading with love',
+      'Community first',
+      'Always giving',
+      'Remembered fondly'
+    ]
+  },
+  {
+    src: 'images/gallery/b52a4521-af5f-4d3a-9c48-6c4331cc1727.png',
+    captions: [
+      '"Do what you can"',
+      'Miracle maker',
+      'Touching lives',
+      'His legacy lives on',
+      'A friend to all'
+    ]
+  },
+  {
+    src: 'images/gallery/header-menu.jpg',
+    captions: [
+      'Building community',
+      'Bringing people together',
+      'Shared moments',
+      'Always welcoming',
+      'A place for everyone'
+    ]
+  },
+  {
+    src: 'images/gallery/rooftop-splash3.jpg',
+    captions: [
+      'Joy in every moment',
+      'Living fully',
+      'Making memories',
+      'A spirit of adventure',
+      'Life celebrated'
+    ]
+  }
+];
+
+// Shuffle array helper
+function shuffleArray(array) {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+}
+
+function initPolaroidImages() {
+  const polaroids = document.querySelectorAll('.polaroid[data-random-photo]');
+  
+  // Shuffle gallery for each page load
+  const shuffledGallery = shuffleArray(photoGallery);
+  
+  polaroids.forEach((polaroid, index) => {
+    const img = polaroid.querySelector('img');
+    const caption = polaroid.querySelector('.polaroid-caption');
+    
+    // Select photo in order from shuffled gallery, wrap around if needed
+    const photo = shuffledGallery[index % shuffledGallery.length];
+    
+    // Select random caption for this photo
+    const randomCaption = photo.captions[Math.floor(Math.random() * photo.captions.length)];
+    
+    // Set the image and caption
+    if (img) {
+      img.src = photo.src;
+      
+      // If image is already loaded (cached)
+      if (img.complete && img.naturalWidth > 0) {
+        polaroid.classList.add('loaded');
+      } else {
+        // Wait for image to load
+        img.addEventListener('load', () => {
+          polaroid.classList.add('loaded');
+        });
+        
+        // Handle error case
+        img.addEventListener('error', () => {
+          polaroid.classList.add('loaded'); // Show anyway with placeholder
+        });
+      }
+    }
+    
+    if (caption) {
+      caption.textContent = randomCaption;
+    }
+  });
+}
+
+// Initialize polaroids when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initPolaroidImages);
+} else {
+  initPolaroidImages();
+}
 
 console.log("Live Like Richard website initialized ✓");
