@@ -4,9 +4,14 @@
 
 class SkyTimeLapse {
   constructor() {
-    this.overlay = document.querySelector(".sky-timelapse");
-    this.currentHour = 0;
+    this.container = document.querySelector(".sky-timelapse");
+    this.currentHour = null;
     this.sections = [];
+    this.images = {};
+    this.currentImage = null;
+    
+    // Hours that have corresponding images
+    this.availableHours = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23];
 
     this.init();
   }
@@ -15,11 +20,36 @@ class SkyTimeLapse {
     // Get all hour sections
     this.sections = Array.from(document.querySelectorAll(".hour-section"));
 
+    // Preload all sky images
+    this.preloadImages();
+
     // Set up scroll listener
     this.setupScrollListener();
+  }
 
-    // Set initial brightness
-    this.updateBrightness(0);
+  preloadImages() {
+    console.log('Preloading sky images...');
+    
+    this.availableHours.forEach(hour => {
+      const img = new Image();
+      const hourStr = hour.toString().padStart(2, '0');
+      img.src = `images/sky/${hourStr}.jpg`;
+      
+      img.onload = () => {
+        console.log(`Loaded sky image for hour ${hour}`);
+      };
+      
+      img.onerror = () => {
+        console.warn(`Failed to load sky image for hour ${hour}`);
+      };
+      
+      this.images[hour] = img;
+    });
+    
+    // Set initial image after short delay to ensure first image is loaded
+    setTimeout(() => {
+      this.handleScroll();
+    }, 100);
   }
 
   setupScrollListener() {
@@ -34,9 +64,6 @@ class SkyTimeLapse {
         ticking = true;
       }
     });
-
-    // Initial check
-    this.handleScroll();
   }
 
   handleScroll() {
@@ -51,7 +78,7 @@ class SkyTimeLapse {
       if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
         const hour = parseInt(section.dataset.hour);
         if (hour !== this.currentHour) {
-          this.updateBrightness(hour);
+          this.transitionToImage(hour);
           this.currentHour = hour;
         }
         break;
@@ -59,47 +86,53 @@ class SkyTimeLapse {
     }
   }
 
-  updateBrightness(hour) {
-    // Calculate darkness overlay based on time of day
-    let darkness;
-
-    if (hour >= 6 && hour <= 18) {
-      // Daytime hours (6 AM - 6 PM): lighter
-      if (hour === 12 || hour === 13) {
-        // Noon - brightest (no overlay)
-        darkness = 0;
-      } else if (hour >= 10 && hour <= 15) {
-        // Mid-day - very bright
-        darkness = 0.1;
-      } else if (hour >= 8 && hour <= 16) {
-        // Morning/afternoon - bright
-        darkness = 0.2;
-      } else if (hour === 7 || hour === 17) {
-        // Early morning/late afternoon
-        darkness = 0.35;
-      } else {
-        // Sunrise/sunset (6, 18)
-        darkness = 0.5;
-      }
-    } else {
-      // Nighttime hours: darker
-      if (hour === 0 || hour === 1 || hour === 23) {
-        // Midnight - darkest
-        darkness = 0.8;
-      } else if (hour >= 2 && hour <= 4) {
-        // Deep night
-        darkness = 0.75;
-      } else if (hour === 5 || hour === 19) {
-        // Dawn/dusk
-        darkness = 0.65;
-      } else {
-        // Evening (20-22)
-        darkness = 0.7;
-      }
+  transitionToImage(hour) {
+    // Check if we have an image for this hour
+    if (!this.images[hour]) {
+      console.warn(`No image available for hour ${hour}`);
+      return;
     }
 
-    // Apply the darkness overlay
-    this.overlay.style.background = `rgba(0, 0, 0, ${darkness})`;
+    const newImg = this.images[hour];
+    
+    // If this is the first image, just add it
+    if (!this.currentImage) {
+      const imgElement = document.createElement('img');
+      imgElement.src = newImg.src;
+      imgElement.style.opacity = '1';
+      imgElement.classList.add('sky-image', 'active');
+      this.container.innerHTML = ''; // Clear any existing content
+      this.container.appendChild(imgElement);
+      this.currentImage = imgElement;
+      console.log(`Initial sky image set to hour ${hour}`);
+      return;
+    }
+
+    // Create new image element for crossfade
+    const newImgElement = document.createElement('img');
+    newImgElement.src = newImg.src;
+    newImgElement.style.opacity = '0';
+    newImgElement.classList.add('sky-image');
+    this.container.appendChild(newImgElement);
+
+    // Trigger crossfade with delay for smoother transition
+    setTimeout(() => {
+      newImgElement.style.opacity = '1';
+      if (this.currentImage) {
+        this.currentImage.style.opacity = '0';
+      }
+    }, 100);
+
+    // Remove old image after transition completes
+    setTimeout(() => {
+      if (this.currentImage && this.currentImage.parentNode) {
+        this.currentImage.remove();
+      }
+      newImgElement.classList.add('active');
+      this.currentImage = newImgElement;
+    }, 2700); // Match CSS transition duration (2.5s + buffer)
+
+    console.log(`Transitioned to sky image for hour ${hour}`);
   }
 }
 
@@ -261,10 +294,10 @@ window.addEventListener("DOMContentLoaded", () => {
       verticalCentered: true,
 
       afterLoad: function (origin, destination, direction) {
-        // Update sky brightness when section changes
+        // Update sky image when section changes
         const hour = parseInt(destination.item.dataset.hour);
         if (skyTimeLapse && hour >= 0) {
-          skyTimeLapse.updateBrightness(hour);
+          skyTimeLapse.transitionToImage(hour);
         }
 
         // Update hour nav active state
@@ -299,7 +332,7 @@ window.addEventListener("DOMContentLoaded", () => {
       afterLoad: function (origin, destination, direction) {
         const hour = parseInt(destination.item.dataset.hour);
         if (skyTimeLapse && hour >= 0) {
-          skyTimeLapse.updateBrightness(hour);
+          skyTimeLapse.transitionToImage(hour);
         }
 
         const hourItems = document.querySelectorAll(".hour-item");
