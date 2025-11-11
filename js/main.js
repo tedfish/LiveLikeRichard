@@ -28,28 +28,15 @@ class SkyTimeLapse {
   }
 
   preloadImages() {
-    console.log('Preloading sky images...');
-    
     this.availableHours.forEach(hour => {
       const img = new Image();
       const hourStr = hour.toString().padStart(2, '0');
       img.src = `images/sky/${hourStr}.jpg`;
-      
-      img.onload = () => {
-        console.log(`Loaded sky image for hour ${hour}`);
-      };
-      
-      img.onerror = () => {
-        console.warn(`Failed to load sky image for hour ${hour}`);
-      };
-      
       this.images[hour] = img;
     });
     
-    // Set initial image after short delay to ensure first image is loaded
-    setTimeout(() => {
-      this.handleScroll();
-    }, 100);
+    // Set initial image after short delay
+    setTimeout(() => this.handleScroll(), 100);
   }
 
   setupScrollListener() {
@@ -87,52 +74,39 @@ class SkyTimeLapse {
   }
 
   transitionToImage(hour) {
-    // Check if we have an image for this hour
-    if (!this.images[hour]) {
-      console.warn(`No image available for hour ${hour}`);
-      return;
-    }
+    if (!this.images[hour]) return;
 
     const newImg = this.images[hour];
     
-    // If this is the first image, just add it
+    // Set initial image
     if (!this.currentImage) {
       const imgElement = document.createElement('img');
       imgElement.src = newImg.src;
       imgElement.style.opacity = '1';
       imgElement.classList.add('sky-image', 'active');
-      this.container.innerHTML = ''; // Clear any existing content
+      this.container.innerHTML = '';
       this.container.appendChild(imgElement);
       this.currentImage = imgElement;
-      console.log(`Initial sky image set to hour ${hour}`);
       return;
     }
 
-    // Create new image element for crossfade
+    // Crossfade to new image
     const newImgElement = document.createElement('img');
     newImgElement.src = newImg.src;
     newImgElement.style.opacity = '0';
     newImgElement.classList.add('sky-image');
     this.container.appendChild(newImgElement);
 
-    // Trigger crossfade with delay for smoother transition
     setTimeout(() => {
       newImgElement.style.opacity = '1';
-      if (this.currentImage) {
-        this.currentImage.style.opacity = '0';
-      }
+      if (this.currentImage) this.currentImage.style.opacity = '0';
     }, 100);
 
-    // Remove old image after transition completes
     setTimeout(() => {
-      if (this.currentImage && this.currentImage.parentNode) {
-        this.currentImage.remove();
-      }
+      if (this.currentImage?.parentNode) this.currentImage.remove();
       newImgElement.classList.add('active');
       this.currentImage = newImgElement;
-    }, 2700); // Match CSS transition duration (2.5s + buffer)
-
-    console.log(`Transitioned to sky image for hour ${hour}`);
+    }, 2700);
   }
 }
 
@@ -318,6 +292,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
         // Update fixed hour-label-wrapper text
         updateHourLabel(destination.item);
+        
+        // Update progress indicator
+        updateProgressIndicator(destination.index);
+        
+        // Show/hide logo based on section
+        toggleLogo(destination.index);
       },
     });
   } else if (typeof fullpage === "function") {
@@ -358,6 +338,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
         // Update fixed hour-label-wrapper text
         updateHourLabel(destination.item);
+        
+        // Update progress indicator
+        updateProgressIndicator(destination.index);
+        
+        // Show/hide logo based on section
+        toggleLogo(destination.index);
       },
     });
   }
@@ -503,20 +489,20 @@ document.addEventListener("DOMContentLoaded", () => {
 // Hour Label Navigation
 // ========================================
 
-// Map of hour values to labels
+// Map of hour values to labels with icons
 const hourLabels = {
-  "5": "5:00 AM - A New Beginning",
-  "7": "7:00 AM - From Seoul to the World",
-  "9": "9:00 AM - The Hospitality Dream",
-  "11": "11:00 AM - The Entrepreneur's Leap",
-  "13": "1:00 PM - Growing Generosity",
-  "15": "3:00 PM - Finding True Love",
-  "17": "5:00 PM - Faith & Family First",
-  "19": "7:00 PM - The Infectious Laugh",
-  "21": "9:00 PM - The Truest Measure",
-  "23": "11:00 PM - Honoring His Heart",
-  "1": "1:00 AM - Survived in Love",
-  "3": "3:00 AM - March 20, 1967 \u2013 January 22, 2024"
+  "5": "☀ 5:00 AM - A New Beginning",
+  "7": "☀ 7:00 AM - From Seoul to the World",
+  "9": "☀ 9:00 AM - The Hospitality Dream",
+  "11": "☀ 11:00 AM - The Entrepreneur's Leap",
+  "13": "☀ 1:00 PM - Growing Generosity",
+  "15": "☀ 3:00 PM - Finding True Love",
+  "17": "☀ 5:00 PM - Faith & Family First",
+  "19": "☾ 7:00 PM - The Infectious Laugh",
+  "21": "☾ 9:00 PM - The Truest Measure",
+  "23": "☾ 11:00 PM - Honoring His Heart",
+  "1": "☾ 1:00 AM - Survived in Love",
+  "3": "☾ 3:00 AM - March 20, 1967 – January 22, 2024"
 };
 
 // Section order for navigation
@@ -651,143 +637,43 @@ if ("loading" in HTMLImageElement.prototype) {
   document.body.appendChild(script);
 }
 
+
+// Initialize progress bar on first section
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    updateProgressIndicator(0); // Start at first section
+    toggleLogo(0); // Hide logo on first section
+  }, 500);
+});
+
 // ========================================
-// Sun/Moon Icon Opacity Simulation
+// Logo Visibility Toggle
 // ========================================
 
-function updateIconOpacity() {
-  const hourItems = document.querySelectorAll(".hour-item");
-
-  hourItems.forEach((item) => {
-    const hour = parseInt(item.getAttribute("data-hour"));
-    const icon = item.querySelector(".hour-icon");
-
-    if (!icon) return;
-
-    let opacity;
-
-    // Determine opacity based on time of day with more dramatic ranges
-    if (hour >= 6 && hour <= 18) {
-      // Daytime (sun) - 6 AM to 6 PM
-      if (hour === 6) {
-        // Sunrise - very dim
-        opacity = 0.2;
-      } else if (hour === 7) {
-        // Early morning
-        opacity = 0.35;
-      } else if (hour === 8) {
-        // Morning
-        opacity = 0.55;
-      } else if (hour === 9) {
-        // Late morning
-        opacity = 0.75;
-      } else if (hour === 10) {
-        // Pre-noon
-        opacity = 0.9;
-      } else if (hour === 11) {
-        // Almost noon
-        opacity = 0.95;
-      } else if (hour === 12) {
-        // Noon - brightest sun
-        opacity = 1.0;
-      } else if (hour === 13) {
-        // Early afternoon
-        opacity = 1.0;
-      } else if (hour === 14) {
-        // Afternoon
-        opacity = 0.95;
-      } else if (hour === 15) {
-        // Mid afternoon
-        opacity = 0.9;
-      } else if (hour === 16) {
-        // Late afternoon
-        opacity = 0.8;
-      } else if (hour === 17) {
-        // Pre-sunset
-        opacity = 0.65;
-      } else if (hour === 18) {
-        // Sunset - dimming fast
-        opacity = 0.4;
-      }
-    } else {
-      // Nighttime (moon) - 7 PM to 5 AM
-      if (hour === 19) {
-        // Early evening - dim moon
-        opacity = 0.3;
-      } else if (hour === 20) {
-        // Evening
-        opacity = 0.45;
-      } else if (hour === 21) {
-        // Night
-        opacity = 0.6;
-      } else if (hour === 22) {
-        // Late night
-        opacity = 0.75;
-      } else if (hour === 23) {
-        // Pre-midnight
-        opacity = 0.85;
-      } else if (hour === 0) {
-        // Midnight - brightest moon
-        opacity = 1.0;
-      } else if (hour === 1) {
-        // Post-midnight
-        opacity = 0.95;
-      } else if (hour === 2) {
-        // Deep night
-        opacity = 0.85;
-      } else if (hour === 3) {
-        // Pre-dawn
-        opacity = 0.7;
-      } else if (hour === 4) {
-        // Dawn approaching
-        opacity = 0.5;
-      } else if (hour === 5) {
-        // Early dawn - moon fading
-        opacity = 0.25;
-      }
-    }
-
-    // Apply opacity with transition
-    icon.style.transition = "opacity 0.3s ease";
-    icon.style.opacity = opacity;
-  });
+function toggleLogo(sectionIndex) {
+  const logo = document.querySelector('.logo');
+  if (!logo) return;
+  
+  // Hide logo on first section (index 0), show on all others
+  if (sectionIndex === 0) {
+    logo.classList.remove('visible');
+  } else {
+    logo.classList.add('visible');
+  }
 }
 
-// Initialize icon opacity on load
-updateIconOpacity();
+// ========================================
+// Progress Indicator Update
+// ========================================
 
-// Optional: Update icon opacity based on currently visible section
-function updateIconBasedOnScroll() {
-  const sections = document.querySelectorAll(".hour-section");
-  const hourItems = document.querySelectorAll(".hour-item");
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const currentHour = entry.target.getAttribute("data-hour");
-
-          // Add 'active' class to corresponding nav item
-          hourItems.forEach((item) => {
-            if (item.getAttribute("data-hour") === currentHour) {
-              item.classList.add("active");
-            } else {
-              item.classList.remove("active");
-            }
-          });
-        }
-      });
-    },
-    {
-      threshold: 0.5,
-    }
-  );
-
-  sections.forEach((section) => observer.observe(section));
+function updateProgressIndicator(sectionIndex) {
+  const hourNav = document.querySelector('.hour-nav');
+  if (!hourNav) return;
+  
+  const totalSections = 12;
+  const progress = ((sectionIndex + 1) / totalSections) * 100;
+  hourNav.style.setProperty('--nav-progress', `${progress}%`);
 }
-
-// Initialize scroll-based active state
-updateIconBasedOnScroll();
 
 // ========================================
 // Section Navigation Arrows - Refactored
