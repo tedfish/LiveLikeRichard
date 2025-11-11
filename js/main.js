@@ -491,18 +491,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Map of hour values to labels with icons
 const hourLabels = {
-  "5": "☀ 5:00 AM - A New Beginning",
-  "7": "☀ 7:00 AM - From Seoul to the World",
-  "9": "☀ 9:00 AM - The Hospitality Dream",
-  "11": "☀ 11:00 AM - The Entrepreneur's Leap",
-  "13": "☀ 1:00 PM - Growing Generosity",
-  "15": "☀ 3:00 PM - Finding True Love",
-  "17": "☀ 5:00 PM - Faith & Family First",
-  "19": "☾ 7:00 PM - The Infectious Laugh",
-  "21": "☾ 9:00 PM - The Truest Measure",
-  "23": "☾ 11:00 PM - Honoring His Heart",
-  "1": "☾ 1:00 AM - Survived in Love",
-  "3": "☾ 3:00 AM - March 20, 1967 – January 22, 2024"
+  "5": "☀ 5:30 AM - A New Day Begins",
+  "7": "☀ 7:32 AM - From Seoul to the World",
+  "9": "☀ 9:17 AM - The Hospitality Dream",
+  "11": "☀ 11:43 AM - Taking the Leap",
+  "13": "☀ 1:22 PM - A Giving Spirit",
+  "15": "☀ 3:08 PM - Finding True Love",
+  "17": "☀ 5:47 PM - Faith & Family",
+  "19": "☾ 7:28 PM - That Laugh",
+  "21": "☾ 9:14 PM - How He Lived",
+  "23": "☾ 11:36 PM - His Heart for St. Serra",
+  "1": "☾ 1:52 AM - Those He Left Behind",
+  "3": "☾ 2:42 AM - Rest in Peace"
 };
 
 // Section order for navigation
