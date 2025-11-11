@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="sunGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FFA500;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF6B35;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FFED4E;stop-opacity:0.8" />
+      <stop offset="70%" style="stop-color:#FFD700;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#FFA500;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Glow effect -->
+  <circle cx="50" cy="50" r="45" fill="url(#glowGradient)" />
+  
+  <!-- Sun rays -->
+  <g fill="url(#sunGradient)">
+    <path d="M50 5 L52 20 L48 20 Z" />
+    <path d="M73.5 12.1 L72.1 26.5 L68.9 24.6 Z" />
+    <path d="M87.9 26.5 L76.4 36.1 L74.6 32.9 Z" />
+    <path d="M95 50 L80 48 L80 52 Z" />
+    <path d="M87.9 73.5 L73.5 67.9 L75.4 71.1 Z" />
+    <path d="M73.5 87.9 L63.9 76.4 L67.1 74.6 Z" />
+    <path d="M50 95 L48 80 L52 80 Z" />
+    <path d="M26.5 87.9 L27.9 73.5 L31.1 75.4 Z" />
+    <path d="M12.1 73.5 L23.6 63.9 L25.4 67.1 Z" />
+    <path d="M5 50 L20 52 L20 48 Z" />
+    <path d="M12.1 26.5 L26.5 32.1 L24.6 28.9 Z" />
+    <path d="M26.5 12.1 L36.1 23.6 L32.9 25.4 Z" />
+  </g>
+  
+  <!-- Heart in the center -->
+  <path d="M50 65 C50 65, 35 54, 35 44 C35 37, 39 33, 43.5 33 C46.5 33, 49 35, 50 38 C51 35, 53.5 33, 56.5 33 C61 33, 65 37, 65 44 C65 54, 50 65, 50 65 Z" 
+        fill="#E63946" 
+        stroke="#C1121F" 
+        stroke-width="1.5" />
+  
+  <!-- Highlight on heart -->
+  <ellipse cx="44" cy="39" rx="3" ry="4" fill="#FF758F" opacity="0.6" />
+</svg>

@@ -310,6 +310,12 @@ window.addEventListener("DOMContentLoaded", () => {
           }
         });
 
+        // Update active section for polaroids
+        document.querySelectorAll('.hour-section').forEach(section => {
+          section.classList.remove('active');
+        });
+        destination.item.classList.add('active');
+
         // Update fixed hour-label-wrapper text
         updateHourLabel(destination.item);
       },
@@ -343,6 +349,12 @@ window.addEventListener("DOMContentLoaded", () => {
             item.classList.remove("active");
           }
         });
+
+        // Update active section for polaroids
+        document.querySelectorAll('.hour-section').forEach(section => {
+          section.classList.remove('active');
+        });
+        destination.item.classList.add('active');
 
         // Update fixed hour-label-wrapper text
         updateHourLabel(destination.item);
@@ -494,17 +506,17 @@ document.addEventListener("DOMContentLoaded", () => {
 // Map of hour values to labels
 const hourLabels = {
   "5": "5:00 AM - A New Beginning",
-  "7": "7:00 AM - The Early Bird",
-  "9": "9:00 AM - Rolling Up Your Sleeves",
-  "11": "11:00 AM - Breaking Bread",
-  "13": "1:00 PM - Community & Connection",
-  "15": "3:00 PM - Lending a Hand",
-  "17": "5:00 PM - Golden Hour",
-  "19": "7:00 PM - A Fine Meal",
-  "21": "9:00 PM - A Night on the Town",
-  "23": "11:00 PM - The Night is Young",
-  "1": "1:00 AM - The Twilight Years",
-  "3": "3:00 AM - Peaceful Rest"
+  "7": "7:00 AM - From Seoul to the World",
+  "9": "9:00 AM - The Hospitality Dream",
+  "11": "11:00 AM - The Entrepreneur's Leap",
+  "13": "1:00 PM - Growing Generosity",
+  "15": "3:00 PM - Finding True Love",
+  "17": "5:00 PM - Faith & Family First",
+  "19": "7:00 PM - The Infectious Laugh",
+  "21": "9:00 PM - The Truest Measure",
+  "23": "11:00 PM - Honoring His Heart",
+  "1": "1:00 AM - Survived in Love",
+  "3": "3:00 AM - March 20, 1967 \u2013 January 22, 2024"
 };
 
 // Section order for navigation
@@ -891,25 +903,13 @@ function shuffleArray(array) {
 }
 
 function initPolaroidImages() {
-  const polaroids = document.querySelectorAll('.polaroid[data-random-photo]');
+  // Get all polaroids (both with data-random-photo and without)
+  const allPolaroids = document.querySelectorAll('.polaroid');
   
-  // Shuffle gallery for each page load
-  const shuffledGallery = shuffleArray(photoGallery);
-  
-  polaroids.forEach((polaroid, index) => {
+  allPolaroids.forEach((polaroid) => {
     const img = polaroid.querySelector('img');
-    const caption = polaroid.querySelector('.polaroid-caption');
     
-    // Select photo in order from shuffled gallery, wrap around if needed
-    const photo = shuffledGallery[index % shuffledGallery.length];
-    
-    // Select random caption for this photo
-    const randomCaption = photo.captions[Math.floor(Math.random() * photo.captions.length)];
-    
-    // Set the image and caption
-    if (img) {
-      img.src = photo.src;
-      
+    if (img && img.src) {
       // If image is already loaded (cached)
       if (img.complete && img.naturalWidth > 0) {
         polaroid.classList.add('loaded');
@@ -921,13 +921,13 @@ function initPolaroidImages() {
         
         // Handle error case
         img.addEventListener('error', () => {
+          console.error('Failed to load image:', img.src);
           polaroid.classList.add('loaded'); // Show anyway with placeholder
         });
       }
-    }
-    
-    if (caption) {
-      caption.textContent = randomCaption;
+    } else {
+      // No image source, still show the polaroid
+      polaroid.classList.add('loaded');
     }
   });
 }
@@ -938,5 +938,48 @@ if (document.readyState === 'loading') {
 } else {
   initPolaroidImages();
 }
+
+// Fallback: ensure all polaroids are visible after a short delay
+setTimeout(() => {
+  const allPolaroids = document.querySelectorAll('.polaroid');
+  allPolaroids.forEach(polaroid => {
+    if (!polaroid.classList.contains('loaded')) {
+      console.log('Force-loading polaroid:', polaroid);
+      polaroid.classList.add('loaded');
+    }
+  });
+}, 500);
+
+// ========================================
+// Active Section Management for Polaroids
+// ========================================
+function updateActiveSections() {
+  const allSections = document.querySelectorAll('.hour-section');
+  
+  allSections.forEach(section => {
+    section.classList.remove('active');
+  });
+  
+  // Use fullpage.js API if available
+  if (window.fullpage_api) {
+    const activeIndex = window.fullpage_api.getActiveSection().index;
+    if (allSections[activeIndex]) {
+      allSections[activeIndex].classList.add('active');
+    }
+  }
+}
+
+// Set up fullpage.js callbacks
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    if (window.fullpage_api) {
+      // Mark first section as active
+      const firstSection = document.querySelector('.hour-section');
+      if (firstSection) {
+        firstSection.classList.add('active');
+      }
+    }
+  }, 1000);
+});
 
 console.log("Live Like Richard website initialized ✓");

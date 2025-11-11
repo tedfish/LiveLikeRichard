@@ -1,0 +1,24 @@
+{
+    "name": "Live Like Richard",
+    "short_name": "Live Like Richard",
+    "description": "Honoring Richard Ham's legacy through charitable giving and community impact",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#1a1a2e",
+    "theme_color": "#FFD700",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "images/favicon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "images/favicon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
