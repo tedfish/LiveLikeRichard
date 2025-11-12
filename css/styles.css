@@ -1086,41 +1086,43 @@ html {
    ======================================== */
 
 @media (max-width: 768px) {
+    .container {
+        padding: 0 20px;
+    }
+    
     .polaroid {
-        max-width: 140px;
-        padding: 8px 8px 28px 8px;
+        width: 160px !important;
+        max-width: 160px;
+        padding: 12px 12px 36px 12px;
+        margin: 12px 10px 30px 10px;
     }
     
-    #hour-05 .polaroid {
-        bottom: 10%;
-        right: 5%;
+    .hour-section {
+        padding: 100px 20px 80px 20px;
     }
     
-    #hour-07 .polaroid {
-        top: 15%;
-        left: 5%;
-    }
-    
-    #hour-09 .polaroid {
-        bottom: 12%;
-        left: 8%;
+    .hour-content {
+        max-width: 100%;
     }
     
     .top-header {
-        padding: 0 15px 0 15px;
-        height: 50px;
+        padding: 0 16px;
+        height: 70px;
     }
 
     .logo {
-        font-size: 1.15rem;
+        font-size: 2rem;
+        margin-top: 30px;
+        padding: 18px 12px 18px 0;
+        letter-spacing: 0.05em;
     }
 
     .top-nav {
-        gap: 15px;
+        gap: 12px;
     }
 
     .top-nav a {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
 
     .top-nav a:not(.btn-donate) {
@@ -1128,40 +1130,37 @@ html {
     }
 
     .btn-donate {
-        padding: 10px 20px;
-        font-size: 0.9rem;
+        padding: 8px 18px;
+        font-size: 0.85rem;
+        border-radius: 20px;
     }
-
+    
+    /* Hide left navigation on mobile */
     .hour-nav {
-        left: 8px;
-        width: 52px;
-        padding: 10px 0;
-        top: 50%;
-        max-height: calc(100vh - 120px);
-        border-radius: 10px;
-        gap: 1px;
+        display: none;
     }
 
     .hour-item {
-        padding: 6px 4px;
-        margin: 0 4px;
+        padding: 8px 6px;
+        margin: 0;
         flex-direction: column;
-        gap: 2px;
+        gap: 0;
         justify-content: center;
         align-items: center;
-        opacity: 0.5;
+        border-left: none;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .hour-item:last-child {
+        border-bottom: none;
     }
     
     .hour-item::before {
-        min-width: 36px;
-        height: 20px;
-        font-size: 0.6rem;
-        padding: 0 4px;
-    }
-
-    .hour-item::before {
         min-width: 100%;
-        font-size: 0.65rem;
+        height: 24px;
+        font-size: 0.7rem;
+        padding: 0 6px;
+        border-radius: 6px;
     }
 
     .hour-time {
@@ -1169,17 +1168,15 @@ html {
     }
     
     .hour-item:hover {
-        transform: translateX(0) scale(1.05);
-        opacity: 0.9;
+        background: rgba(255, 255, 255, 0.1);
+        transform: scale(1.05);
     }
 
     .hour-item.active {
-        opacity: 1;
-        transform: translateX(0) scale(1.1);
-    }
-    
-    .hour-item.active .hour-icon {
-        transform: scale(1.2);
+        background: rgba(255, 255, 255, 0.15);
+        transform: scale(1.05);
+        border-bottom-color: #10b981;
+        border-bottom-width: 3px;
     }
     
     /* Hide tooltip on mobile */
@@ -1188,23 +1185,54 @@ html {
     }
 
     .hero-title {
-        font-size: 2.8rem;
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+        line-height: 1.2;
     }
 
     .hero-subtitle {
-        font-size: 1.3rem;
+        font-size: 1.15rem;
+        line-height: 1.6;
+        margin-bottom: 30px;
     }
 
     .hero-quote {
-        font-size: 1.1rem;
+        font-size: 1.3rem;
+        margin: 30px 0;
     }
 
     .section-title {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+        margin-bottom: 20px;
+        line-height: 1.2;
     }
 
     .section-text {
         font-size: 1.1rem;
+        line-height: 1.7;
+        margin-bottom: 25px;
+    }
+    
+    .btn-donate-large {
+        font-size: 1.1rem;
+        padding: 16px 40px;
+        margin: 30px auto 40px auto;
+    }
+    
+    .hour-label-wrapper {
+        width: 90%;
+        max-width: 400px;
+        bottom: 80px;
+    }
+    
+    .hour-label {
+        font-size: 0.7rem;
+        padding: 10px 18px;
+    }
+    
+    .section-nav-arrow {
+        width: 36px;
+        height: 36px;
     }
 
     .footer-content {
@@ -1214,16 +1242,69 @@ html {
 }
 
 @media (max-width: 480px) {
+    .container {
+        padding: 0 16px;
+    }
+    
+    .hour-section {
+        padding: 90px 16px 70px 16px;
+    }
+    
+    .logo {
+        font-size: 1.75rem;
+        margin-top: 28px;
+        padding: 16px 10px 16px 0;
+    }
+    
+    .hour-nav {
+        width: 54px;
+        left: 8px;
+    }
+    
+    .polaroid {
+        width: 140px !important;
+        max-width: 140px;
+        padding: 10px 10px 30px 10px;
+    }
+    
     .hero-title {
-        font-size: 2.2rem;
+        font-size: 2rem;
+        margin-bottom: 25px;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+        line-height: 1.5;
     }
 
     .section-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        margin-bottom: 18px;
     }
 
     .section-text {
         font-size: 1rem;
+        line-height: 1.6;
+    }
+    
+    .btn-donate-large {
+        font-size: 1rem;
+        padding: 14px 32px;
+    }
+    
+    .hour-label-wrapper {
+        bottom: 70px;
+        gap: 10px;
+    }
+    
+    .hour-label {
+        font-size: 0.65rem;
+        padding: 8px 14px;
+    }
+    
+    .section-nav-arrow {
+        width: 32px;
+        height: 32px;
     }
 }
 
@@ -1298,17 +1379,9 @@ html {
 
 /* Mobile adjustments */
 @media (max-width: 768px) {
+    /* Hide audio player on mobile */
     .audio-player {
-        bottom: 20px;
-        right: 20px;
-        padding: 10px 16px;
-    }
-
-    .audio-info {
-        font-size: 0.8rem;
-        max-width: 150px;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        display: none;
     }
 }
 
