@@ -957,50 +957,105 @@ html {
     flex: 1 1 auto;
 }
 
-/* 2 polaroids - varied sizes */
-.hour-content:has(.polaroid:nth-of-type(2):not(:nth-of-type(3))) .polaroid:nth-of-type(1) {
-    flex: 0 1 calc(45% - 20px);
+/* Random varied sizes for each section's polaroids */
+/* Hour 05 - 2 polaroids */
+#hour-05 .polaroid:nth-of-type(1) {
+    flex: 0 1 calc(52% - 20px);
+    max-width: 340px;
+}
+#hour-05 .polaroid:nth-of-type(2) {
+    flex: 0 1 calc(48% - 20px);
+    max-width: 310px;
+}
+
+/* Hour 07 - 2 polaroids */
+#hour-07 .polaroid:nth-of-type(1) {
+    flex: 0 1 calc(42% - 20px);
+    max-width: 280px;
+}
+#hour-07 .polaroid:nth-of-type(2) {
+    flex: 0 1 calc(58% - 20px);
+    max-width: 370px;
+}
+
+/* Hour 09 - 2 polaroids */
+#hour-09 .polaroid:nth-of-type(1) {
+    flex: 0 1 calc(46% - 20px);
+    max-width: 300px;
+}
+#hour-09 .polaroid:nth-of-type(2) {
+    flex: 0 1 calc(54% - 20px);
+    max-width: 350px;
+}
+
+/* Hour 11 - 3 polaroids */
+#hour-11 .polaroid:nth-of-type(1) {
+    flex: 0 1 calc(32% - 20px);
+    max-width: 240px;
+}
+#hour-11 .polaroid:nth-of-type(2) {
+    flex: 0 1 calc(24% - 20px);
+    max-width: 200px;
+}
+#hour-11 .polaroid:nth-of-type(3) {
+    flex: 0 1 calc(44% - 20px);
     max-width: 300px;
 }
 
-.hour-content:has(.polaroid:nth-of-type(2):not(:nth-of-type(3))) .polaroid:nth-of-type(2) {
-    flex: 0 1 calc(55% - 20px);
-    max-width: 360px;
+/* Hour 13 - 3 polaroids */
+#hour-13 .polaroid:nth-of-type(1) {
+    flex: 0 1 calc(38% - 20px);
+    max-width: 270px;
 }
-
-/* 3 polaroids - varied sizes */
-.hour-content:has(.polaroid:nth-of-type(3):not(:nth-of-type(4))) .polaroid:nth-of-type(1) {
+#hour-13 .polaroid:nth-of-type(2) {
     flex: 0 1 calc(28% - 20px);
     max-width: 220px;
 }
-
-.hour-content:has(.polaroid:nth-of-type(3):not(:nth-of-type(4))) .polaroid:nth-of-type(2) {
-    flex: 0 1 calc(38% - 20px);
-    max-width: 280px;
-}
-
-.hour-content:has(.polaroid:nth-of-type(3):not(:nth-of-type(4))) .polaroid:nth-of-type(3) {
+#hour-13 .polaroid:nth-of-type(3) {
     flex: 0 1 calc(34% - 20px);
     max-width: 250px;
 }
 
-/* 4+ polaroids - more varied */
-.hour-content:has(.polaroid:nth-of-type(4)) .polaroid:nth-of-type(1) {
-    flex: 0 1 calc(22% - 20px);
-    max-width: 190px;
-}
-
-.hour-content:has(.polaroid:nth-of-type(4)) .polaroid:nth-of-type(2) {
-    flex: 0 1 calc(28% - 20px);
+/* Hour 15 - 3 polaroids */
+#hour-15 .polaroid:nth-of-type(1) {
+    flex: 0 1 calc(30% - 20px);
     max-width: 230px;
 }
-
-.hour-content:has(.polaroid:nth-of-type(4)) .polaroid:nth-of-type(3) {
-    flex: 0 1 calc(25% - 20px);
+#hour-15 .polaroid:nth-of-type(2) {
+    flex: 0 1 calc(42% - 20px);
+    max-width: 290px;
+}
+#hour-15 .polaroid:nth-of-type(3) {
+    flex: 0 1 calc(28% - 20px);
     max-width: 210px;
 }
 
-.hour-content:has(.polaroid:nth-of-type(4)) .polaroid:nth-of-type(4) {
+/* Default for any other sections with 2 polaroids */
+.hour-content:has(.polaroid:nth-of-type(2):not(:nth-of-type(3))) .polaroid:nth-of-type(1) {
+    flex: 0 1 calc(48% - 20px);
+    max-width: 310px;
+}
+.hour-content:has(.polaroid:nth-of-type(2):not(:nth-of-type(3))) .polaroid:nth-of-type(2) {
+    flex: 0 1 calc(52% - 20px);
+    max-width: 340px;
+}
+
+/* Default for any other sections with 3 polaroids */
+.hour-content:has(.polaroid:nth-of-type(3):not(:nth-of-type(4))) .polaroid:nth-of-type(1) {
+    flex: 0 1 calc(35% - 20px);
+    max-width: 260px;
+}
+.hour-content:has(.polaroid:nth-of-type(3):not(:nth-of-type(4))) .polaroid:nth-of-type(2) {
+    flex: 0 1 calc(30% - 20px);
+    max-width: 230px;
+}
+.hour-content:has(.polaroid:nth-of-type(3):not(:nth-of-type(4))) .polaroid:nth-of-type(3) {
+    flex: 0 1 calc(35% - 20px);
+    max-width: 260px;
+}
+
+/* 4+ polaroids */
+.hour-content:has(.polaroid:nth-of-type(4)) .polaroid {
     flex: 0 1 calc(25% - 20px);
     max-width: 210px;
 }
@@ -1017,46 +1072,71 @@ html {
     max-width: 160px;
 }
 
-/* Natural, random rotation variations for authentic polaroid look */
-.polaroid:nth-of-type(1) {
-    transform: rotate(-3.5deg);
-}
+/* Unique random rotations for each section's polaroids */
+/* Hour 05 */
+#hour-05 .polaroid:nth-of-type(1) { transform: rotate(-4.2deg); }
+#hour-05 .polaroid:nth-of-type(2) { transform: rotate(3.5deg); }
 
-.polaroid:nth-of-type(2) {
-    transform: rotate(2.8deg);
-}
+/* Hour 07 */
+#hour-07 .polaroid:nth-of-type(1) { transform: rotate(2.8deg); }
+#hour-07 .polaroid:nth-of-type(2) { transform: rotate(-3.1deg); }
 
-.polaroid:nth-of-type(3) {
-    transform: rotate(-1.6deg);
-}
+/* Hour 09 */
+#hour-09 .polaroid:nth-of-type(1) { transform: rotate(-2.5deg); }
+#hour-09 .polaroid:nth-of-type(2) { transform: rotate(4.7deg); }
 
-.polaroid:nth-of-type(4) {
-    transform: rotate(4.2deg);
-}
+/* Hour 11 */
+#hour-11 .polaroid:nth-of-type(1) { transform: rotate(3.9deg); }
+#hour-11 .polaroid:nth-of-type(2) { transform: rotate(-5.1deg); }
+#hour-11 .polaroid:nth-of-type(3) { transform: rotate(1.8deg); }
 
-.polaroid:nth-of-type(5) {
-    transform: rotate(-2.9deg);
-}
+/* Hour 13 */
+#hour-13 .polaroid:nth-of-type(1) { transform: rotate(-3.7deg); }
+#hour-13 .polaroid:nth-of-type(2) { transform: rotate(4.4deg); }
+#hour-13 .polaroid:nth-of-type(3) { transform: rotate(-1.9deg); }
 
-.polaroid:nth-of-type(6) {
-    transform: rotate(1.7deg);
-}
+/* Hour 15 */
+#hour-15 .polaroid:nth-of-type(1) { transform: rotate(2.3deg); }
+#hour-15 .polaroid:nth-of-type(2) { transform: rotate(-4.6deg); }
+#hour-15 .polaroid:nth-of-type(3) { transform: rotate(3.2deg); }
 
-.polaroid:nth-of-type(7) {
-    transform: rotate(-4.3deg);
-}
+/* Hour 17 */
+#hour-17 .polaroid:nth-of-type(1) { transform: rotate(-2.9deg); }
+#hour-17 .polaroid:nth-of-type(2) { transform: rotate(5.3deg); }
+#hour-17 .polaroid:nth-of-type(3) { transform: rotate(-3.4deg); }
 
-.polaroid:nth-of-type(8) {
-    transform: rotate(3.1deg);
-}
+/* Hour 19 */
+#hour-19 .polaroid:nth-of-type(1) { transform: rotate(4.1deg); }
+#hour-19 .polaroid:nth-of-type(2) { transform: rotate(-2.2deg); }
+#hour-19 .polaroid:nth-of-type(3) { transform: rotate(3.6deg); }
 
-.polaroid:nth-of-type(9) {
-    transform: rotate(-2.4deg);
-}
+/* Hour 21 */
+#hour-21 .polaroid:nth-of-type(1) { transform: rotate(-4.8deg); }
+#hour-21 .polaroid:nth-of-type(2) { transform: rotate(2.7deg); }
+#hour-21 .polaroid:nth-of-type(3) { transform: rotate(-1.5deg); }
 
-.polaroid:nth-of-type(10) {
-    transform: rotate(3.7deg);
-}
+/* Hour 23 */
+#hour-23 .polaroid:nth-of-type(1) { transform: rotate(3.3deg); }
+#hour-23 .polaroid:nth-of-type(2) { transform: rotate(-3.8deg); }
+#hour-23 .polaroid:nth-of-type(3) { transform: rotate(5.2deg); }
+
+/* Hour 01 */
+#hour-01 .polaroid:nth-of-type(1) { transform: rotate(-3.3deg); }
+#hour-01 .polaroid:nth-of-type(2) { transform: rotate(4.5deg); }
+#hour-01 .polaroid:nth-of-type(3) { transform: rotate(-2.1deg); }
+
+/* Hour 03 */
+#hour-03 .polaroid:nth-of-type(1) { transform: rotate(2.6deg); }
+#hour-03 .polaroid:nth-of-type(2) { transform: rotate(-4.9deg); }
+#hour-03 .polaroid:nth-of-type(3) { transform: rotate(3.7deg); }
+
+/* Fallback rotations for any other polaroids */
+.polaroid:nth-of-type(1) { transform: rotate(-3.5deg); }
+.polaroid:nth-of-type(2) { transform: rotate(2.8deg); }
+.polaroid:nth-of-type(3) { transform: rotate(-1.6deg); }
+.polaroid:nth-of-type(4) { transform: rotate(4.2deg); }
+.polaroid:nth-of-type(5) { transform: rotate(-2.9deg); }
+.polaroid:nth-of-type(6) { transform: rotate(1.7deg); }
 
 /* Enhanced hover effect - straightens and lifts */
 .polaroid:hover {
