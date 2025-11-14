@@ -908,91 +908,116 @@ html {
    ======================================== */
 
 .polaroid {
-    display: inline-block;
     background: #f8f6f1;
     padding: 16px 16px 50px 16px;
-    /* More padding on bottom like real Polaroid */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
         0 8px 15px rgba(0, 0, 0, 0.15),
         0 2px 4px rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(0, 0, 0, 0.05);
     transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
     cursor: pointer;
-    margin: 10px 15px 40px 15px;
-    vertical-align: top;
     position: relative;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    margin: 10px 8px 30px 8px;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 280px;
 }
 
-/* Varied sizes for visual interest */
-.hour-section .polaroid:nth-of-type(1) {
-    width: 220px;
+/* Make hour-content wrap polaroids in a flex row */
+.hour-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0;
 }
 
-.hour-section .polaroid:nth-of-type(2) {
-    width: 240px;
+/* Text elements take full width */
+.hour-content > h1,
+.hour-content > h2,
+.hour-content > p,
+.hour-content > .hero-title,
+.hour-content > .hero-subtitle,
+.hour-content > .hero-quote,
+.hour-content > .hero-subquote,
+.hour-content > .section-title,
+.hour-content > .section-text,
+.hour-content > .btn-primary,
+.hour-content > .btn-donate-large,
+.hour-content > .mission-icon {
+    flex: 0 0 100%;
+    text-align: center;
 }
 
-.hour-section .polaroid:nth-of-type(3) {
-    width: 200px;
+/* Polaroids stay in one row */
+.hour-content > .polaroid {
+    flex: 1 1 auto;
 }
 
-.hour-section .polaroid:nth-of-type(4) {
-    width: 230px;
+/* 2 polaroids */
+.hour-content:has(.polaroid:nth-of-type(2):not(:nth-of-type(3))) .polaroid {
+    flex: 0 1 calc(50% - 20px);
+    max-width: 320px;
 }
 
-.hour-section .polaroid:nth-of-type(5) {
-    width: 210px;
+/* 3 polaroids */
+.hour-content:has(.polaroid:nth-of-type(3):not(:nth-of-type(4))) .polaroid {
+    flex: 0 1 calc(33.333% - 20px);
+    max-width: 240px;
 }
 
-/* Natural, random rotation variations */
-.hour-section .polaroid:nth-of-type(1) {
-    transform: rotate(-3.2deg);
+/* 4+ polaroids */
+.hour-content:has(.polaroid:nth-of-type(4)) .polaroid {
+    flex: 0 1 calc(25% - 20px);
+    max-width: 200px;
 }
 
-.hour-section .polaroid:nth-of-type(2) {
-    transform: rotate(2.7deg);
+/* 5+ polaroids */
+.hour-content:has(.polaroid:nth-of-type(5)) .polaroid {
+    flex: 0 1 calc(20% - 20px);
+    max-width: 180px;
 }
 
-.hour-section .polaroid:nth-of-type(3) {
-    transform: rotate(-1.8deg);
+/* 6+ polaroids */
+.hour-content:has(.polaroid:nth-of-type(6)) .polaroid {
+    flex: 0 1 calc(16.666% - 20px);
+    max-width: 160px;
 }
 
-.hour-section .polaroid:nth-of-type(4) {
-    transform: rotate(3.5deg);
+/* Subtle rotation variations for natural polaroid look */
+.polaroid:nth-of-type(1) {
+    transform: rotate(-2deg);
 }
 
-.hour-section .polaroid:nth-of-type(5) {
-    transform: rotate(-2.3deg);
+.polaroid:nth-of-type(2) {
+    transform: rotate(1.5deg);
 }
 
-.hour-section .polaroid:nth-of-type(6) {
-    transform: rotate(1.6deg);
+.polaroid:nth-of-type(3) {
+    transform: rotate(-1.2deg);
 }
 
-.hour-section .polaroid:nth-of-type(7) {
-    transform: rotate(-4.1deg);
-}
-
-.hour-section .polaroid:nth-of-type(8) {
+.polaroid:nth-of-type(4) {
     transform: rotate(2.2deg);
 }
 
-.hour-section .polaroid:nth-of-type(9) {
-    transform: rotate(-2.9deg);
+.polaroid:nth-of-type(5) {
+    transform: rotate(-1.8deg);
 }
 
-.hour-section .polaroid:nth-of-type(10) {
-    transform: rotate(3.8deg);
+.polaroid:nth-of-type(6) {
+    transform: rotate(1.3deg);
 }
 
 /* Enhanced hover effect */
 .polaroid:hover {
-    transform: rotate(0deg) scale(1.08) translateY(-15px) !important;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25),
-        0 30px 60px rgba(0, 0, 0, 0.15),
-        0 10px 20px rgba(0, 0, 0, 0.1);
+    transform: rotate(0deg) scale(1.05) translateY(-8px) !important;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25),
+        0 24px 48px rgba(0, 0, 0, 0.15),
+        0 8px 16px rgba(0, 0, 0, 0.1);
     z-index: 1000;
 }
 
@@ -1186,10 +1211,20 @@ html {
     }
 
     .polaroid {
-        width: 160px !important;
-        max-width: 160px;
         padding: 12px 12px 36px 12px;
-        margin: 12px 10px 30px 10px;
+        margin: 8px 4px 24px 4px;
+    }
+    
+    /* 2 polaroids on mobile - wider */
+    .hour-content:has(.polaroid:nth-of-type(2):not(:nth-of-type(3))) .polaroid {
+        flex: 0 1 calc(50% - 12px);
+        max-width: none;
+    }
+    
+    /* 3+ polaroids on mobile - fit 3 per row */
+    .hour-content:has(.polaroid:nth-of-type(3)) .polaroid {
+        flex: 0 1 calc(33.333% - 12px);
+        max-width: none;
     }
 
     .hour-section {
@@ -1390,9 +1425,20 @@ html {
     }
 
     .polaroid {
-        width: 140px !important;
-        max-width: 140px;
         padding: 10px 10px 30px 10px;
+        margin: 6px 3px 20px 3px;
+    }
+    
+    /* 2 polaroids on small phones */
+    .hour-content:has(.polaroid:nth-of-type(2):not(:nth-of-type(3))) .polaroid {
+        flex: 0 1 calc(50% - 10px);
+        max-width: none;
+    }
+    
+    /* 3+ polaroids on small phones */
+    .hour-content:has(.polaroid:nth-of-type(3)) .polaroid {
+        flex: 0 1 calc(33.333% - 10px);
+        max-width: none;
     }
 
     .hero-title {
