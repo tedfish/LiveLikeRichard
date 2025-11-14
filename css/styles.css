@@ -662,9 +662,9 @@ html {
     color: white;
     letter-spacing: -0.02em;
     line-height: 1.1;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), 
-                 0 4px 12px rgba(0, 0, 0, 0.5),
-                 0 8px 24px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3),
+        0 4px 12px rgba(0, 0, 0, 0.5),
+        0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 .hero-subtitle {
@@ -675,7 +675,7 @@ html {
     color: white;
     letter-spacing: -0.01em;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6),
-                 0 4px 16px rgba(0, 0, 0, 0.4);
+        0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .hero-quote {
@@ -686,7 +686,7 @@ html {
     color: white;
     line-height: 1.6;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6),
-                 0 3px 12px rgba(0, 0, 0, 0.5);
+        0 3px 12px rgba(0, 0, 0, 0.5);
 }
 
 .hero-subquote {
@@ -697,7 +697,7 @@ html {
     color: white;
     letter-spacing: 0.5px;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6),
-                 0 3px 12px rgba(0, 0, 0, 0.5);
+        0 3px 12px rgba(0, 0, 0, 0.5);
 }
 
 .hour-label-wrapper {
@@ -882,19 +882,19 @@ html {
     letter-spacing: -0.02em;
     line-height: 1.2;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3),
-                 0 4px 12px rgba(0, 0, 0, 0.5),
-                 0 8px 24px rgba(0, 0, 0, 0.4);
+        0 4px 12px rgba(0, 0, 0, 0.5),
+        0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 .section-text {
     font-family: var(--font-primary);
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 10px;
     color: white;
     letter-spacing: -0.01em;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6),
-                 0 4px 16px rgba(0, 0, 0, 0.4);
+        0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .mission-icon {
@@ -936,24 +936,24 @@ html {
 }
 
 /* Text elements take full width */
-.hour-content > h1,
-.hour-content > h2,
-.hour-content > p,
-.hour-content > .hero-title,
-.hour-content > .hero-subtitle,
-.hour-content > .hero-quote,
-.hour-content > .hero-subquote,
-.hour-content > .section-title,
-.hour-content > .section-text,
-.hour-content > .btn-primary,
-.hour-content > .btn-donate-large,
-.hour-content > .mission-icon {
+.hour-content>h1,
+.hour-content>h2,
+.hour-content>p,
+.hour-content>.hero-title,
+.hour-content>.hero-subtitle,
+.hour-content>.hero-quote,
+.hour-content>.hero-subquote,
+.hour-content>.section-title,
+.hour-content>.section-text,
+.hour-content>.btn-primary,
+.hour-content>.btn-donate-large,
+.hour-content>.mission-icon {
     flex: 0 0 100%;
     text-align: center;
 }
 
 /* Polaroids stay in one row */
-.hour-content > .polaroid {
+.hour-content>.polaroid {
     flex: 1 1 auto;
 }
 
@@ -963,6 +963,7 @@ html {
     flex: 0 1 calc(52% - 20px);
     max-width: 260px;
 }
+
 #hour-05 .polaroid:nth-of-type(2) {
     flex: 0 1 calc(48% - 20px);
     max-width: 240px;
@@ -973,6 +974,7 @@ html {
     flex: 0 1 calc(42% - 20px);
     max-width: 220px;
 }
+
 #hour-07 .polaroid:nth-of-type(2) {
     flex: 0 1 calc(58% - 20px);
     max-width: 280px;
@@ -983,6 +985,7 @@ html {
     flex: 0 1 calc(46% - 20px);
     max-width: 230px;
 }
+
 #hour-09 .polaroid:nth-of-type(2) {
     flex: 0 1 calc(54% - 20px);
     max-width: 260px;
@@ -993,10 +996,12 @@ html {
     flex: 0 1 calc(32% - 20px);
     max-width: 190px;
 }
+
 #hour-11 .polaroid:nth-of-type(2) {
     flex: 0 1 calc(24% - 20px);
     max-width: 160px;
 }
+
 #hour-11 .polaroid:nth-of-type(3) {
     flex: 0 1 calc(44% - 20px);
     max-width: 230px;
@@ -1007,10 +1012,12 @@ html {
     flex: 0 1 calc(38% - 20px);
     max-width: 200px;
 }
+
 #hour-13 .polaroid:nth-of-type(2) {
     flex: 0 1 calc(28% - 20px);
     max-width: 170px;
 }
+
 #hour-13 .polaroid:nth-of-type(3) {
     flex: 0 1 calc(34% - 20px);
     max-width: 190px;
@@ -1021,10 +1028,12 @@ html {
     flex: 0 1 calc(30% - 20px);
     max-width: 180px;
 }
+
 #hour-15 .polaroid:nth-of-type(2) {
     flex: 0 1 calc(42% - 20px);
     max-width: 220px;
 }
+
 #hour-15 .polaroid:nth-of-type(3) {
     flex: 0 1 calc(28% - 20px);
     max-width: 170px;
@@ -1035,6 +1044,7 @@ html {
     flex: 0 1 calc(48% - 20px);
     max-width: 240px;
 }
+
 .hour-content:has(.polaroid:nth-of-type(2):not(:nth-of-type(3))) .polaroid:nth-of-type(2) {
     flex: 0 1 calc(52% - 20px);
     max-width: 260px;
@@ -1045,10 +1055,12 @@ html {
     flex: 0 1 calc(35% - 20px);
     max-width: 200px;
 }
+
 .hour-content:has(.polaroid:nth-of-type(3):not(:nth-of-type(4))) .polaroid:nth-of-type(2) {
     flex: 0 1 calc(30% - 20px);
     max-width: 180px;
 }
+
 .hour-content:has(.polaroid:nth-of-type(3):not(:nth-of-type(4))) .polaroid:nth-of-type(3) {
     flex: 0 1 calc(35% - 20px);
     max-width: 200px;
@@ -1074,69 +1086,173 @@ html {
 
 /* Unique random rotations for each section's polaroids */
 /* Hour 05 */
-#hour-05 .polaroid:nth-of-type(1) { transform: rotate(-4.2deg); }
-#hour-05 .polaroid:nth-of-type(2) { transform: rotate(3.5deg); }
+#hour-05 .polaroid:nth-of-type(1) {
+    transform: rotate(-4.2deg);
+}
+
+#hour-05 .polaroid:nth-of-type(2) {
+    transform: rotate(3.5deg);
+}
 
 /* Hour 07 */
-#hour-07 .polaroid:nth-of-type(1) { transform: rotate(2.8deg); }
-#hour-07 .polaroid:nth-of-type(2) { transform: rotate(-3.1deg); }
+#hour-07 .polaroid:nth-of-type(1) {
+    transform: rotate(2.8deg);
+}
+
+#hour-07 .polaroid:nth-of-type(2) {
+    transform: rotate(-3.1deg);
+}
 
 /* Hour 09 */
-#hour-09 .polaroid:nth-of-type(1) { transform: rotate(-2.5deg); }
-#hour-09 .polaroid:nth-of-type(2) { transform: rotate(4.7deg); }
+#hour-09 .polaroid:nth-of-type(1) {
+    transform: rotate(-2.5deg);
+}
+
+#hour-09 .polaroid:nth-of-type(2) {
+    transform: rotate(4.7deg);
+}
 
 /* Hour 11 */
-#hour-11 .polaroid:nth-of-type(1) { transform: rotate(3.9deg); }
-#hour-11 .polaroid:nth-of-type(2) { transform: rotate(-5.1deg); }
-#hour-11 .polaroid:nth-of-type(3) { transform: rotate(1.8deg); }
+#hour-11 .polaroid:nth-of-type(1) {
+    transform: rotate(3.9deg);
+}
+
+#hour-11 .polaroid:nth-of-type(2) {
+    transform: rotate(-5.1deg);
+}
+
+#hour-11 .polaroid:nth-of-type(3) {
+    transform: rotate(1.8deg);
+}
 
 /* Hour 13 */
-#hour-13 .polaroid:nth-of-type(1) { transform: rotate(-3.7deg); }
-#hour-13 .polaroid:nth-of-type(2) { transform: rotate(4.4deg); }
-#hour-13 .polaroid:nth-of-type(3) { transform: rotate(-1.9deg); }
+#hour-13 .polaroid:nth-of-type(1) {
+    transform: rotate(-3.7deg);
+}
+
+#hour-13 .polaroid:nth-of-type(2) {
+    transform: rotate(4.4deg);
+}
+
+#hour-13 .polaroid:nth-of-type(3) {
+    transform: rotate(-1.9deg);
+}
 
 /* Hour 15 */
-#hour-15 .polaroid:nth-of-type(1) { transform: rotate(2.3deg); }
-#hour-15 .polaroid:nth-of-type(2) { transform: rotate(-4.6deg); }
-#hour-15 .polaroid:nth-of-type(3) { transform: rotate(3.2deg); }
+#hour-15 .polaroid:nth-of-type(1) {
+    transform: rotate(2.3deg);
+}
+
+#hour-15 .polaroid:nth-of-type(2) {
+    transform: rotate(-4.6deg);
+}
+
+#hour-15 .polaroid:nth-of-type(3) {
+    transform: rotate(3.2deg);
+}
 
 /* Hour 17 */
-#hour-17 .polaroid:nth-of-type(1) { transform: rotate(-2.9deg); }
-#hour-17 .polaroid:nth-of-type(2) { transform: rotate(5.3deg); }
-#hour-17 .polaroid:nth-of-type(3) { transform: rotate(-3.4deg); }
+#hour-17 .polaroid:nth-of-type(1) {
+    transform: rotate(-2.9deg);
+}
+
+#hour-17 .polaroid:nth-of-type(2) {
+    transform: rotate(5.3deg);
+}
+
+#hour-17 .polaroid:nth-of-type(3) {
+    transform: rotate(-3.4deg);
+}
 
 /* Hour 19 */
-#hour-19 .polaroid:nth-of-type(1) { transform: rotate(4.1deg); }
-#hour-19 .polaroid:nth-of-type(2) { transform: rotate(-2.2deg); }
-#hour-19 .polaroid:nth-of-type(3) { transform: rotate(3.6deg); }
+#hour-19 .polaroid:nth-of-type(1) {
+    transform: rotate(4.1deg);
+}
+
+#hour-19 .polaroid:nth-of-type(2) {
+    transform: rotate(-2.2deg);
+}
+
+#hour-19 .polaroid:nth-of-type(3) {
+    transform: rotate(3.6deg);
+}
 
 /* Hour 21 */
-#hour-21 .polaroid:nth-of-type(1) { transform: rotate(-4.8deg); }
-#hour-21 .polaroid:nth-of-type(2) { transform: rotate(2.7deg); }
-#hour-21 .polaroid:nth-of-type(3) { transform: rotate(-1.5deg); }
+#hour-21 .polaroid:nth-of-type(1) {
+    transform: rotate(-4.8deg);
+}
+
+#hour-21 .polaroid:nth-of-type(2) {
+    transform: rotate(2.7deg);
+}
+
+#hour-21 .polaroid:nth-of-type(3) {
+    transform: rotate(-1.5deg);
+}
 
 /* Hour 23 */
-#hour-23 .polaroid:nth-of-type(1) { transform: rotate(3.3deg); }
-#hour-23 .polaroid:nth-of-type(2) { transform: rotate(-3.8deg); }
-#hour-23 .polaroid:nth-of-type(3) { transform: rotate(5.2deg); }
+#hour-23 .polaroid:nth-of-type(1) {
+    transform: rotate(3.3deg);
+}
+
+#hour-23 .polaroid:nth-of-type(2) {
+    transform: rotate(-3.8deg);
+}
+
+#hour-23 .polaroid:nth-of-type(3) {
+    transform: rotate(5.2deg);
+}
 
 /* Hour 01 */
-#hour-01 .polaroid:nth-of-type(1) { transform: rotate(-3.3deg); }
-#hour-01 .polaroid:nth-of-type(2) { transform: rotate(4.5deg); }
-#hour-01 .polaroid:nth-of-type(3) { transform: rotate(-2.1deg); }
+#hour-01 .polaroid:nth-of-type(1) {
+    transform: rotate(-3.3deg);
+}
+
+#hour-01 .polaroid:nth-of-type(2) {
+    transform: rotate(4.5deg);
+}
+
+#hour-01 .polaroid:nth-of-type(3) {
+    transform: rotate(-2.1deg);
+}
 
 /* Hour 03 */
-#hour-03 .polaroid:nth-of-type(1) { transform: rotate(2.6deg); }
-#hour-03 .polaroid:nth-of-type(2) { transform: rotate(-4.9deg); }
-#hour-03 .polaroid:nth-of-type(3) { transform: rotate(3.7deg); }
+#hour-03 .polaroid:nth-of-type(1) {
+    transform: rotate(2.6deg);
+}
+
+#hour-03 .polaroid:nth-of-type(2) {
+    transform: rotate(-4.9deg);
+}
+
+#hour-03 .polaroid:nth-of-type(3) {
+    transform: rotate(3.7deg);
+}
 
 /* Fallback rotations for any other polaroids */
-.polaroid:nth-of-type(1) { transform: rotate(-3.5deg); }
-.polaroid:nth-of-type(2) { transform: rotate(2.8deg); }
-.polaroid:nth-of-type(3) { transform: rotate(-1.6deg); }
-.polaroid:nth-of-type(4) { transform: rotate(4.2deg); }
-.polaroid:nth-of-type(5) { transform: rotate(-2.9deg); }
-.polaroid:nth-of-type(6) { transform: rotate(1.7deg); }
+.polaroid:nth-of-type(1) {
+    transform: rotate(-3.5deg);
+}
+
+.polaroid:nth-of-type(2) {
+    transform: rotate(2.8deg);
+}
+
+.polaroid:nth-of-type(3) {
+    transform: rotate(-1.6deg);
+}
+
+.polaroid:nth-of-type(4) {
+    transform: rotate(4.2deg);
+}
+
+.polaroid:nth-of-type(5) {
+    transform: rotate(-2.9deg);
+}
+
+.polaroid:nth-of-type(6) {
+    transform: rotate(1.7deg);
+}
 
 /* Enhanced hover effect - straightens and lifts */
 .polaroid:hover {
@@ -1340,13 +1456,13 @@ html {
         padding: 12px 12px 36px 12px;
         margin: 8px 4px 24px 4px;
     }
-    
+
     /* 2 polaroids on mobile - wider */
     .hour-content:has(.polaroid:nth-of-type(2):not(:nth-of-type(3))) .polaroid {
         flex: 0 1 calc(50% - 12px);
         max-width: none;
     }
-    
+
     /* 3+ polaroids on mobile - fit 3 per row */
     .hour-content:has(.polaroid:nth-of-type(3)) .polaroid {
         flex: 0 1 calc(33.333% - 12px);
@@ -1459,7 +1575,7 @@ html {
         margin: 20px 0;
         line-height: 1.7;
     }
-    
+
     .hero-subquote {
         font-size: 0.9rem;
     }
@@ -1485,7 +1601,7 @@ html {
         align-items: center;
         justify-content: center;
     }
-    
+
     .btn-primary {
         min-height: 54px;
         padding: 18px 45px;
@@ -1513,7 +1629,7 @@ html {
         height: 44px;
         opacity: 0.85;
     }
-    
+
     .section-nav-arrow:active {
         opacity: 1;
         transform: scale(0.95);
@@ -1533,7 +1649,7 @@ html {
     .hour-section {
         padding: 90px 16px 70px 16px;
     }
-    
+
     .hour-content {
         padding: 30px 24px;
         border-radius: 16px;
@@ -1554,13 +1670,13 @@ html {
         padding: 10px 10px 30px 10px;
         margin: 6px 3px 20px 3px;
     }
-    
+
     /* 2 polaroids on small phones */
     .hour-content:has(.polaroid:nth-of-type(2):not(:nth-of-type(3))) .polaroid {
         flex: 0 1 calc(50% - 10px);
         max-width: none;
     }
-    
+
     /* 3+ polaroids on small phones */
     .hour-content:has(.polaroid:nth-of-type(3)) .polaroid {
         flex: 0 1 calc(33.333% - 10px);
@@ -1578,12 +1694,12 @@ html {
         line-height: 1.6;
         margin-bottom: 16px;
     }
-    
+
     .hero-quote {
         font-size: 0.95rem;
         margin: 16px 0;
     }
-    
+
     .hero-subquote {
         font-size: 0.85rem;
     }
@@ -1605,7 +1721,7 @@ html {
         padding: 16px 36px;
         min-height: 52px;
     }
-    
+
     .btn-primary {
         min-height: 52px;
         padding: 16px 36px;
@@ -1626,7 +1742,7 @@ html {
         width: 44px;
         height: 44px;
     }
-    
+
     .section-nav-arrow svg {
         width: 18px;
         height: 18px;
