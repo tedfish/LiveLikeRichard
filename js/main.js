@@ -121,254 +121,256 @@ if (document.readyState === "loading") {
 }
 
 // ========================================
-// Section Tracking (CSS Scroll Snap handles scrolling)
+// Section Tracking
+// ========================================
+// Now handled by SectionScroller class
+
+// ========================================
+// Custom Robust Section Scrolling
 // ========================================
 
-let currentSection = 0;
-const sections = document.querySelectorAll(".hour-section");
-let isNavigating = false;
-let navigationTimeout = null;
-
-// Update current section based on scroll position
-function updateCurrentSection() {
-  const scrollPosition = window.scrollY + window.innerHeight / 2;
-
-  sections.forEach((section, index) => {
-    const sectionTop = section.offsetTop;
-    const sectionBottom = sectionTop + section.offsetHeight;
-
-    if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-      currentSection = index;
+class SectionScroller {
+  constructor() {
+    this.sections = [];
+    this.currentIndex = 0;
+    this.isScrolling = false;
+    this.scrollTimeout = null;
+    this.wheelTimeout = null;
+    this.touchStartY = 0;
+    this.lastWheelTime = 0;
+    this.wheelCooldown = 1000; // ms between scroll actions
+    
+    this.init();
+  }
+  
+  init() {
+    this.sections = Array.from(document.querySelectorAll('.hour-section'));
+    
+    if (this.sections.length === 0) {
+      console.error('No sections found');
+      return;
     }
+    
+    // Set up event listeners
+    this.setupWheelListener();
+    this.setupTouchListener();
+    this.setupKeyboardListener();
+    
+    // Initialize first section
+    this.goToSection(0, false);
+    
+    console.log('Custom section scroller initialized with', this.sections.length, 'sections');
+  }
+  
+  setupWheelListener() {
+    let wheelDelta = 0;
+    const wheelThreshold = 50; // Accumulated delta needed to trigger scroll
+    
+    const handleWheel = (e) => {
+      e.preventDefault();
+      
+      const now = Date.now();
+      
+      // If we're in cooldown, ignore
+      if (this.isScrolling || now - this.lastWheelTime < this.wheelCooldown) {
+        return;
+      }
+      
+      // Accumulate wheel delta
+      wheelDelta += e.deltaY;
+      
+      // Clear timeout for delta reset
+      clearTimeout(this.wheelTimeout);
+      
+      // Check if we've accumulated enough delta
+      if (Math.abs(wheelDelta) >= wheelThreshold) {
+        if (wheelDelta > 0) {
+          // Scroll down
+          this.next();
+        } else {
+          // Scroll up
+          this.prev();
+        }
+        wheelDelta = 0;
+      } else {
+        // Reset delta after 150ms of no wheel movement
+        this.wheelTimeout = setTimeout(() => {
+          wheelDelta = 0;
+        }, 150);
+      }
+    };
+    
+    // Use both wheel and mousewheel for better compatibility
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('mousewheel', handleWheel, { passive: false });
+  }
+  
+  setupTouchListener() {
+    window.addEventListener('touchstart', (e) => {
+      this.touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    
+    window.addEventListener('touchend', (e) => {
+      if (this.isScrolling) return;
+      
+      const touchEndY = e.changedTouches[0].clientY;
+      const diff = this.touchStartY - touchEndY;
+      
+      // Minimum swipe distance
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          this.next();
+        } else {
+          this.prev();
+        }
+      }
+    }, { passive: true });
+  }
+  
+  setupKeyboardListener() {
+    window.addEventListener('keydown', (e) => {
+      // Ignore if user is typing
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+        return;
+      }
+      
+      if (this.isScrolling) {
+        e.preventDefault();
+        return;
+      }
+      
+      switch (e.key) {
+        case 'ArrowDown':
+        case 'PageDown':
+        case ' ':
+          e.preventDefault();
+          this.next();
+          break;
+        case 'ArrowUp':
+        case 'PageUp':
+          e.preventDefault();
+          this.prev();
+          break;
+        case 'Home':
+          e.preventDefault();
+          this.goToSection(0);
+          break;
+        case 'End':
+          e.preventDefault();
+          this.goToSection(this.sections.length - 1);
+          break;
+      }
+    });
+  }
+  
+  next() {
+    if (this.currentIndex < this.sections.length - 1) {
+      this.goToSection(this.currentIndex + 1);
+    }
+  }
+  
+  prev() {
+    if (this.currentIndex > 0) {
+      this.goToSection(this.currentIndex - 1);
+    }
+  }
+  
+  goToSection(index, animate = true) {
+    if (index < 0 || index >= this.sections.length) return;
+    if (this.isScrolling && animate) return;
+    
+    this.isScrolling = true;
+    this.currentIndex = index;
+    this.lastWheelTime = Date.now();
+    
+    const section = this.sections[index];
+    
+    // Scroll to section
+    section.scrollIntoView({
+      behavior: animate ? 'smooth' : 'auto',
+      block: 'start'
+    });
+    
+    // Update states
+    this.updateSectionStates(section, index);
+    
+    // Reset scrolling flag
+    clearTimeout(this.scrollTimeout);
+    this.scrollTimeout = setTimeout(() => {
+      this.isScrolling = false;
+    }, animate ? 1000 : 100);
+  }
+  
+  updateSectionStates(section, index) {
+    // Update sky image
+    const hour = parseInt(section.dataset.hour);
+    if (skyTimeLapse && hour >= 0) {
+      skyTimeLapse.transitionToImage(hour);
+    }
+    
+    // Update hour nav active state
+    const hourItems = document.querySelectorAll('.hour-item');
+    hourItems.forEach((item) => {
+      if (item.dataset.hour === section.dataset.hour) {
+        item.classList.add('active');
+      } else {
+        item.classList.remove('active');
+      }
+    });
+    
+    // Update active section for polaroids
+    this.sections.forEach(s => s.classList.remove('active'));
+    section.classList.add('active');
+    
+    // Update hour label
+    updateHourLabel(section);
+    
+    // Update progress indicator
+    updateProgressIndicator(index);
+    
+    // Show/hide logo
+    toggleLogo(index);
+  }
+}
+
+// Initialize custom scroller
+let sectionScroller;
+if (document.readyState === 'loading') {
+  window.addEventListener('DOMContentLoaded', () => {
+    sectionScroller = new SectionScroller();
   });
+} else {
+  sectionScroller = new SectionScroller();
 }
 
-// Debounced update function for more reliable tracking
-let updateDebounceTimer = null;
-function debouncedUpdateCurrentSection() {
-  clearTimeout(updateDebounceTimer);
-  updateDebounceTimer = setTimeout(() => {
-    updateCurrentSection();
-  }, 100);
-}
-
-// Handle keyboard navigation with fullpage.js integration
-function handleKeydown(e) {
-  // Ignore if user is typing in an input field
-  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") {
-    return;
-  }
-
-  // Prevent rapid repeated navigation
-  if (isNavigating) {
-    e.preventDefault();
-    return;
-  }
-
-  let targetSection = null;
-
-  switch (e.key) {
-    case "ArrowDown":
-    case "PageDown":
-    case " ": // Space
-      e.preventDefault();
-      // Use fullpage.js API if available, otherwise fallback
-      if (typeof fullpage_api !== "undefined") {
-        fullpage_api.moveSectionDown();
-      } else if (currentSection < sections.length - 1) {
-        targetSection = currentSection + 1;
-      }
-      break;
-    case "ArrowUp":
-    case "PageUp":
-      e.preventDefault();
-      // Use fullpage.js API if available, otherwise fallback
-      if (typeof fullpage_api !== "undefined") {
-        fullpage_api.moveSectionUp();
-      } else if (currentSection > 0) {
-        targetSection = currentSection - 1;
-      }
-      break;
-    case "Home":
-      e.preventDefault();
-      if (typeof fullpage_api !== "undefined") {
-        fullpage_api.moveTo(1);
-      } else {
-        targetSection = 0;
-      }
-      break;
-    case "End":
-      e.preventDefault();
-      if (typeof fullpage_api !== "undefined") {
-        fullpage_api.moveTo(sections.length);
-      } else {
-        targetSection = sections.length - 1;
-      }
-      break;
-    default:
-      return; // Don't prevent default for other keys
-  }
-
-  // Fallback navigation if fullpage.js not available
-  if (targetSection !== null) {
-    isNavigating = true;
-    sections[targetSection].scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-
-    // Update current section immediately
-    currentSection = targetSection;
-
-    // Reset navigation lock after animation completes
-    clearTimeout(navigationTimeout);
-    navigationTimeout = setTimeout(() => {
-      isNavigating = false;
-      updateCurrentSection();
-    }, 1000);
-  } else if (typeof fullpage_api !== "undefined") {
-    // If using fullpage.js, set navigation lock
-    isNavigating = true;
-    clearTimeout(navigationTimeout);
-    navigationTimeout = setTimeout(() => {
-      isNavigating = false;
-    }, 800);
-  }
-}
-
-// Attach event listeners
-window.addEventListener("keydown", handleKeydown);
-window.addEventListener("scroll", debouncedUpdateCurrentSection, {
-  passive: true,
-});
-
-// Initialize current section
-updateCurrentSection();
-
-// ========================================
-// Initialize fullPage.js
-// ========================================
-
-let fullPageInstance = null;
-
-window.addEventListener("DOMContentLoaded", () => {
-  if (typeof fullpage !== "undefined" && fullpage.default) {
-    // fullpage.js v4 uses ES6 modules, access via .default
-    fullPageInstance = new fullpage.default("#fullpage", {
-      licenseKey: "YOUR_LICENSE_KEY",
-      autoScrolling: true,
-      scrollHorizontally: false,
-      navigation: false,
-      scrollingSpeed: 1000,
-      fitToSection: true,
-      fitToSectionDelay: 1000,
-      easingcss3: "cubic-bezier(0.645, 0.045, 0.355, 1)",
-      scrollBar: false,
-      css3: true,
-      verticalCentered: true,
-
-      afterLoad: function (origin, destination, direction) {
-        // Update sky image when section changes
-        const hour = parseInt(destination.item.dataset.hour);
-        if (skyTimeLapse && hour >= 0) {
-          skyTimeLapse.transitionToImage(hour);
-        }
-
-        // Update hour nav active state
-        const hourItems = document.querySelectorAll(".hour-item");
-        hourItems.forEach((item) => {
-          if (item.dataset.hour === destination.item.dataset.hour) {
-            item.classList.add("active");
-          } else {
-            item.classList.remove("active");
-          }
-        });
-
-        // Update active section for polaroids
-        document.querySelectorAll('.hour-section').forEach(section => {
-          section.classList.remove('active');
-        });
-        destination.item.classList.add('active');
-
-        // Update fixed hour-label-wrapper text
-        updateHourLabel(destination.item);
-        
-        // Update progress indicator
-        updateProgressIndicator(destination.index);
-        
-        // Show/hide logo based on section
-        toggleLogo(destination.index);
-      },
-    });
-  } else if (typeof fullpage === "function") {
-    // Try direct constructor if not a module
-    fullPageInstance = new fullpage("#fullpage", {
-      licenseKey: "YOUR_LICENSE_KEY",
-      autoScrolling: true,
-      scrollHorizontally: false,
-      navigation: false,
-      scrollingSpeed: 1000,
-      fitToSection: true,
-      fitToSectionDelay: 1000,
-      easingcss3: "cubic-bezier(0.645, 0.045, 0.355, 1)",
-      scrollBar: false,
-      css3: true,
-      verticalCentered: true,
-
-      afterLoad: function (origin, destination, direction) {
-        const hour = parseInt(destination.item.dataset.hour);
-        if (skyTimeLapse && hour >= 0) {
-          skyTimeLapse.transitionToImage(hour);
-        }
-
-        const hourItems = document.querySelectorAll(".hour-item");
-        hourItems.forEach((item) => {
-          if (item.dataset.hour === destination.item.dataset.hour) {
-            item.classList.add("active");
-          } else {
-            item.classList.remove("active");
-          }
-        });
-
-        // Update active section for polaroids
-        document.querySelectorAll('.hour-section').forEach(section => {
-          section.classList.remove('active');
-        });
-        destination.item.classList.add('active');
-
-        // Update fixed hour-label-wrapper text
-        updateHourLabel(destination.item);
-        
-        // Update progress indicator
-        updateProgressIndicator(destination.index);
-        
-        // Show/hide logo based on section
-        toggleLogo(destination.index);
-      },
-    });
-  }
-});
+// Expose API for compatibility
+window.fullpage_api = {
+  moveSectionDown: () => sectionScroller?.next(),
+  moveSectionUp: () => sectionScroller?.prev(),
+  moveTo: (index) => sectionScroller?.goToSection(index - 1),
+  getActiveSection: () => ({ index: sectionScroller?.currentIndex || 0 })
+};
 
 // ========================================
 // Smooth Scrolling & Navigation
 // ========================================
 
-// Handle top navigation with fullpage.js (excluding hour nav)
+// Handle top navigation
 document.addEventListener("DOMContentLoaded", () => {
   // Map of section IDs to indices
   const sectionMap = {
-    "hour-05": 1,
-    "hour-07": 2,
-    "hour-09": 3,
-    "hour-11": 4,
-    "hour-13": 5,
-    "hour-15": 6,
-    "hour-17": 7,
-    "hour-19": 8,
-    "hour-21": 9,
-    "hour-23": 10,
-    "hour-01": 11,
-    "hour-03": 12,
+    "hour-05": 0,
+    "hour-07": 1,
+    "hour-09": 2,
+    "hour-11": 3,
+    "hour-13": 4,
+    "hour-15": 5,
+    "hour-17": 6,
+    "hour-19": 7,
+    "hour-21": 8,
+    "hour-23": 9,
+    "hour-01": 10,
+    "hour-03": 11,
   };
 
   document
@@ -382,12 +384,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         e.preventDefault();
 
-        // Use fullpage.js API to navigate by index
-        const sectionId = href.substring(1); // Remove #
+        // Use section scroller
+        const sectionId = href.substring(1);
         const sectionIndex = sectionMap[sectionId];
 
-        if (typeof fullpage_api !== "undefined" && sectionIndex) {
-          fullpage_api.moveTo(sectionIndex);
+        if (sectionScroller && sectionIndex !== undefined) {
+          sectionScroller.goToSection(sectionIndex);
         }
       });
     });
@@ -424,8 +426,8 @@ if (navbar) {
 // Hour Navigation
 // ========================================
 
-// Wait for fullpage to initialize before setting up navigation
-setTimeout(() => {
+// Set up hour navigation
+document.addEventListener("DOMContentLoaded", () => {
   const hourItems = document.querySelectorAll(".hour-item");
 
   if (!hourItems.length) {
@@ -438,19 +440,15 @@ setTimeout(() => {
       e.preventDefault();
       e.stopPropagation();
 
-      const sectionIndex = parseInt(item.getAttribute("data-section"));
+      // data-section is 1-indexed, convert to 0-indexed
+      const sectionIndex = parseInt(item.getAttribute("data-section")) - 1;
 
-      // Use section index for navigation
-      if (window.fullpage_api) {
-        window.fullpage_api.moveTo(sectionIndex);
-      } else if (typeof fullpage_api !== "undefined") {
-        fullpage_api.moveTo(sectionIndex);
-      } else {
-        console.error("fullpage_api not available");
+      if (sectionScroller && sectionIndex >= 0) {
+        sectionScroller.goToSection(sectionIndex);
       }
     });
   });
-}, 500);
+});
 
 // ========================================
 // Intersection Observer for Hour Sections
@@ -514,29 +512,13 @@ let currentSectionIndex = 0;
 // ========================================
 
 function navigateToSection(direction) {
-  console.log(`Navigation requested: ${direction}`);
+  if (!sectionScroller) return;
   
-  // Wait for API to be available
-  let attempts = 0;
-  const checkAPI = setInterval(() => {
-    attempts++;
-    const api = window.fullpage_api;
-    
-    if (api) {
-      clearInterval(checkAPI);
-      console.log(`API found after ${attempts} attempts, moving ${direction}`);
-      
-      if (direction === 'up') {
-        api.moveSectionUp();
-      } else if (direction === 'down') {
-        api.moveSectionDown();
-      }
-    } else if (attempts >= 60) {
-      // After 3 seconds (60 * 50ms)
-      clearInterval(checkAPI);
-      console.error('fullpage_api not available after 3 seconds');
-    }
-  }, 50); // Check every 50ms
+  if (direction === 'up') {
+    sectionScroller.prev();
+  } else if (direction === 'down') {
+    sectionScroller.next();
+  }
 }
 
 function updateHourLabel(section) {
@@ -839,33 +821,6 @@ setTimeout(() => {
 // ========================================
 // Active Section Management for Polaroids
 // ========================================
-function updateActiveSections() {
-  const allSections = document.querySelectorAll('.hour-section');
-  
-  allSections.forEach(section => {
-    section.classList.remove('active');
-  });
-  
-  // Use fullpage.js API if available
-  if (window.fullpage_api) {
-    const activeIndex = window.fullpage_api.getActiveSection().index;
-    if (allSections[activeIndex]) {
-      allSections[activeIndex].classList.add('active');
-    }
-  }
-}
-
-// Set up fullpage.js callbacks
-window.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    if (window.fullpage_api) {
-      // Mark first section as active
-      const firstSection = document.querySelector('.hour-section');
-      if (firstSection) {
-        firstSection.classList.add('active');
-      }
-    }
-  }, 1000);
-});
+// Now handled by SectionScroller.updateSectionStates()
 
 console.log("Live Like Richard website initialized ✓");
