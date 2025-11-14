@@ -75,8 +75,10 @@ body::-webkit-scrollbar {
 
 html,
 body {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
 .container {
@@ -138,9 +140,17 @@ body {
 }
 
 @keyframes subtle-color-shift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .logo::before {
@@ -300,7 +310,7 @@ body {
 
     transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 0 15px rgba(16, 185, 129, 0.6),
-                0 0 30px rgba(16, 185, 129, 0.3);
+        0 0 30px rgba(16, 185, 129, 0.3);
     pointer-events: none;
     z-index: 1;
 }
@@ -364,7 +374,7 @@ body {
     letter-spacing: 0.08em;
     padding: 0 10px;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5),
-                0 1px 0 rgba(255, 255, 255, 0.05);
+        0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .hour-item:hover {
@@ -377,7 +387,7 @@ body {
     color: rgba(255, 255, 255, 0.95);
     border-color: rgba(255, 255, 255, 0.35);
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6),
-                0 2px 6px rgba(16, 185, 129, 0.2);
+        0 2px 6px rgba(16, 185, 129, 0.2);
 }
 
 .hour-item.active {
@@ -385,7 +395,7 @@ body {
     border-left-color: #10b981;
     border-left-width: 3px;
     box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 /* Smooth scroll behavior for active item */
@@ -398,7 +408,7 @@ body {
     color: white;
     border-color: rgba(16, 185, 129, 0.5);
     box-shadow: 0 2px 12px rgba(16, 185, 129, 0.6),
-                inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
     font-weight: 800;
 }
@@ -410,18 +420,66 @@ body {
 
 /* Hour-based icon opacity (simulating day/night cycle) */
 /* Using opacity property directly instead of filter */
-.hour-item[data-hour="5"] { opacity: 0.5; } /* Dawn */
-.hour-item[data-hour="7"] { opacity: 0.65; } /* Early morning */
-.hour-item[data-hour="9"] { opacity: 0.75; } /* Morning */
-.hour-item[data-hour="11"] { opacity: 0.85; } /* Late morning */
-.hour-item[data-hour="13"] { opacity: 0.9; } /* Noon */
-.hour-item[data-hour="15"] { opacity: 0.85; } /* Afternoon */
-.hour-item[data-hour="17"] { opacity: 0.75; } /* Late afternoon */
-.hour-item[data-hour="19"] { opacity: 0.6; } /* Dusk */
-.hour-item[data-hour="21"] { opacity: 0.7; } /* Evening */
-.hour-item[data-hour="23"] { opacity: 0.8; } /* Night */
-.hour-item[data-hour="1"] { opacity: 0.85; }  /* Midnight */
-.hour-item[data-hour="3"] { opacity: 0.65; }   /* Pre-dawn */
+.hour-item[data-hour="5"] {
+    opacity: 0.5;
+}
+
+/* Dawn */
+.hour-item[data-hour="7"] {
+    opacity: 0.65;
+}
+
+/* Early morning */
+.hour-item[data-hour="9"] {
+    opacity: 0.75;
+}
+
+/* Morning */
+.hour-item[data-hour="11"] {
+    opacity: 0.85;
+}
+
+/* Late morning */
+.hour-item[data-hour="13"] {
+    opacity: 0.9;
+}
+
+/* Noon */
+.hour-item[data-hour="15"] {
+    opacity: 0.85;
+}
+
+/* Afternoon */
+.hour-item[data-hour="17"] {
+    opacity: 0.75;
+}
+
+/* Late afternoon */
+.hour-item[data-hour="19"] {
+    opacity: 0.6;
+}
+
+/* Dusk */
+.hour-item[data-hour="21"] {
+    opacity: 0.7;
+}
+
+/* Evening */
+.hour-item[data-hour="23"] {
+    opacity: 0.8;
+}
+
+/* Night */
+.hour-item[data-hour="1"] {
+    opacity: 0.85;
+}
+
+/* Midnight */
+.hour-item[data-hour="3"] {
+    opacity: 0.65;
+}
+
+/* Pre-dawn */
 
 /* Active and hover states override opacity */
 .hour-item.active,
@@ -581,10 +639,16 @@ html {
     text-align: center;
     color: white;
     max-width: 800px;
-    text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 0, 0, 0.5);
     animation: fadeInUp 1s ease;
     transform-origin: center;
     overflow: visible !important;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 60px 50px;
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .hero-title {
@@ -595,33 +659,42 @@ html {
     color: white;
     letter-spacing: -0.02em;
     line-height: 1.1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), 
+                 0 4px 12px rgba(0, 0, 0, 0.5),
+                 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 .hero-subtitle {
     font-family: var(--font-primary);
     font-size: 1.4rem;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 10px;
     color: white;
     letter-spacing: -0.01em;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6),
+                 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .hero-quote {
     font-size: 1.1rem;
     font-style: italic;
     margin-bottom: 10px;
-    opacity: 0.95;
+    opacity: 1;
     color: white;
     line-height: 1.6;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6),
+                 0 3px 12px rgba(0, 0, 0, 0.5);
 }
 
 .hero-subquote {
     font-size: 0.95rem;
-    font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-semibold);
     margin-bottom: 25px;
-    opacity: 0.85;
+    opacity: 1;
     color: white;
     letter-spacing: 0.5px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6),
+                 0 3px 12px rgba(0, 0, 0, 0.5);
 }
 
 .hour-label-wrapper {
@@ -753,9 +826,11 @@ html {
         opacity: 0;
         transform: translateY(60px) scale(0.9);
     }
+
     50% {
         opacity: 0.5;
     }
+
     100% {
         opacity: 1;
         transform: translateY(0) scale(1);
@@ -794,15 +869,20 @@ html {
     margin-bottom: 20px;
     letter-spacing: -0.02em;
     line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3),
+                 0 4px 12px rgba(0, 0, 0, 0.5),
+                 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 .section-text {
     font-family: var(--font-primary);
     font-size: 1.4rem;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 10px;
     color: white;
     letter-spacing: -0.01em;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6),
+                 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .mission-icon {
@@ -818,10 +898,11 @@ html {
 .polaroid {
     display: inline-block;
     background: #f8f6f1;
-    padding: 16px 16px 50px 16px; /* More padding on bottom like real Polaroid */
+    padding: 16px 16px 50px 16px;
+    /* More padding on bottom like real Polaroid */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
-                0 8px 15px rgba(0, 0, 0, 0.15),
-                0 2px 4px rgba(0, 0, 0, 0.05);
+        0 8px 15px rgba(0, 0, 0, 0.15),
+        0 2px 4px rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(0, 0, 0, 0.05);
     transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
     cursor: pointer;
@@ -896,8 +977,8 @@ html {
 .polaroid:hover {
     transform: rotate(0deg) scale(1.08) translateY(-15px) !important;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25),
-                0 30px 60px rgba(0, 0, 0, 0.15),
-                0 10px 20px rgba(0, 0, 0, 0.1);
+        0 30px 60px rgba(0, 0, 0, 0.15),
+        0 10px 20px rgba(0, 0, 0, 0.1);
     z-index: 1000;
 }
 
@@ -945,8 +1026,8 @@ html {
     font-size: 1.2rem;
     transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
     box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3),
-                0 4px 12px rgba(0, 0, 0, 0.15),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        0 4px 12px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
     margin: 40px auto 50px auto;
     position: relative;
     overflow: hidden;
@@ -973,8 +1054,8 @@ html {
 .btn-donate-large:hover {
     transform: translateY(-4px) scale(1.02);
     box-shadow: 0 15px 40px rgba(16, 185, 129, 0.4),
-                0 8px 18px rgba(0, 0, 0, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        0 8px 18px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
     border-color: rgba(255, 255, 255, 0.3);
 }
 
@@ -1089,22 +1170,22 @@ html {
     .container {
         padding: 0 20px;
     }
-    
+
     .polaroid {
         width: 160px !important;
         max-width: 160px;
         padding: 12px 12px 36px 12px;
         margin: 12px 10px 30px 10px;
     }
-    
+
     .hour-section {
         padding: 100px 20px 80px 20px;
     }
-    
+
     .hour-content {
         max-width: 100%;
     }
-    
+
     .top-header {
         padding: 0 16px;
         height: 70px;
@@ -1134,7 +1215,7 @@ html {
         font-size: 0.85rem;
         border-radius: 20px;
     }
-    
+
     /* Hide left navigation on mobile */
     .hour-nav {
         display: none;
@@ -1150,11 +1231,11 @@ html {
         border-left: none;
         border-bottom: 2px solid rgba(255, 255, 255, 0.2);
     }
-    
+
     .hour-item:last-child {
         border-bottom: none;
     }
-    
+
     .hour-item::before {
         min-width: 100%;
         height: 24px;
@@ -1166,7 +1247,7 @@ html {
     .hour-time {
         display: none;
     }
-    
+
     .hour-item:hover {
         background: rgba(255, 255, 255, 0.1);
         transform: scale(1.05);
@@ -1178,7 +1259,7 @@ html {
         border-bottom-color: #10b981;
         border-bottom-width: 3px;
     }
-    
+
     /* Hide tooltip on mobile */
     .hour-item::after {
         display: none;
@@ -1212,24 +1293,24 @@ html {
         line-height: 1.7;
         margin-bottom: 25px;
     }
-    
+
     .btn-donate-large {
         font-size: 1.1rem;
         padding: 16px 40px;
         margin: 30px auto 40px auto;
     }
-    
+
     .hour-label-wrapper {
         width: 90%;
         max-width: 400px;
         bottom: 80px;
     }
-    
+
     .hour-label {
         font-size: 0.7rem;
         padding: 10px 18px;
     }
-    
+
     .section-nav-arrow {
         width: 36px;
         height: 36px;
@@ -1245,33 +1326,33 @@ html {
     .container {
         padding: 0 16px;
     }
-    
+
     .hour-section {
         padding: 90px 16px 70px 16px;
     }
-    
+
     .logo {
         font-size: 1.75rem;
         margin-top: 28px;
         padding: 16px 10px 16px 0;
     }
-    
+
     .hour-nav {
         width: 54px;
         left: 8px;
     }
-    
+
     .polaroid {
         width: 140px !important;
         max-width: 140px;
         padding: 10px 10px 30px 10px;
     }
-    
+
     .hero-title {
         font-size: 2rem;
         margin-bottom: 25px;
     }
-    
+
     .hero-subtitle {
         font-size: 1rem;
         line-height: 1.5;
@@ -1286,22 +1367,22 @@ html {
         font-size: 1rem;
         line-height: 1.6;
     }
-    
+
     .btn-donate-large {
         font-size: 1rem;
         padding: 14px 32px;
     }
-    
+
     .hour-label-wrapper {
         bottom: 70px;
         gap: 10px;
     }
-    
+
     .hour-label {
         font-size: 0.65rem;
         padding: 8px 14px;
     }
-    
+
     .section-nav-arrow {
         width: 32px;
         height: 32px;
@@ -1379,6 +1460,7 @@ html {
 
 /* Mobile adjustments */
 @media (max-width: 768px) {
+
     /* Hide audio player on mobile */
     .audio-player {
         display: none;
