@@ -9,7 +9,7 @@ class SkyTimeLapse {
     this.sections = [];
     this.images = {};
     this.currentImage = null;
-    
+
     // Hours that have corresponding images
     this.availableHours = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23];
 
@@ -34,7 +34,7 @@ class SkyTimeLapse {
       img.src = `images/sky/${hourStr}.jpg`;
       this.images[hour] = img;
     });
-    
+
     // Set initial image after short delay
     setTimeout(() => this.handleScroll(), 100);
   }
@@ -77,7 +77,7 @@ class SkyTimeLapse {
     if (!this.images[hour]) return;
 
     const newImg = this.images[hour];
-    
+
     // Set initial image
     if (!this.currentImage) {
       const imgElement = document.createElement('img');
@@ -106,7 +106,7 @@ class SkyTimeLapse {
       if (this.currentImage?.parentNode) this.currentImage.remove();
       newImgElement.classList.add('active');
       this.currentImage = newImgElement;
-    }, 2700);
+    }, 1300);
   }
 }
 
@@ -139,49 +139,49 @@ class SectionScroller {
     this.touchStartY = 0;
     this.lastWheelTime = 0;
     this.wheelCooldown = 1000; // ms between scroll actions
-    
+
     this.init();
   }
-  
+
   init() {
     this.sections = Array.from(document.querySelectorAll('.hour-section'));
-    
+
     if (this.sections.length === 0) {
       console.error('No sections found');
       return;
     }
-    
+
     // Set up event listeners
     this.setupWheelListener();
     this.setupTouchListener();
     this.setupKeyboardListener();
-    
+
     // Initialize first section
     this.goToSection(0, false);
-    
+
     console.log('Custom section scroller initialized with', this.sections.length, 'sections');
   }
-  
+
   setupWheelListener() {
     let wheelDelta = 0;
     const wheelThreshold = 50; // Accumulated delta needed to trigger scroll
-    
+
     const handleWheel = (e) => {
       e.preventDefault();
-      
+
       const now = Date.now();
-      
+
       // If we're in cooldown, ignore
       if (this.isScrolling || now - this.lastWheelTime < this.wheelCooldown) {
         return;
       }
-      
+
       // Accumulate wheel delta
       wheelDelta += e.deltaY;
-      
+
       // Clear timeout for delta reset
       clearTimeout(this.wheelTimeout);
-      
+
       // Check if we've accumulated enough delta
       if (Math.abs(wheelDelta) >= wheelThreshold) {
         if (wheelDelta > 0) {
@@ -199,23 +199,23 @@ class SectionScroller {
         }, 150);
       }
     };
-    
+
     // Use both wheel and mousewheel for better compatibility
     window.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('mousewheel', handleWheel, { passive: false });
   }
-  
+
   setupTouchListener() {
     window.addEventListener('touchstart', (e) => {
       this.touchStartY = e.touches[0].clientY;
     }, { passive: true });
-    
+
     window.addEventListener('touchend', (e) => {
       if (this.isScrolling) return;
-      
+
       const touchEndY = e.changedTouches[0].clientY;
       const diff = this.touchStartY - touchEndY;
-      
+
       // Minimum swipe distance
       if (Math.abs(diff) > 50) {
         if (diff > 0) {
@@ -226,19 +226,19 @@ class SectionScroller {
       }
     }, { passive: true });
   }
-  
+
   setupKeyboardListener() {
     window.addEventListener('keydown', (e) => {
       // Ignore if user is typing
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
         return;
       }
-      
+
       if (this.isScrolling) {
         e.preventDefault();
         return;
       }
-      
+
       switch (e.key) {
         case 'ArrowDown':
         case 'PageDown':
@@ -262,52 +262,52 @@ class SectionScroller {
       }
     });
   }
-  
+
   next() {
     if (this.currentIndex < this.sections.length - 1) {
       this.goToSection(this.currentIndex + 1);
     }
   }
-  
+
   prev() {
     if (this.currentIndex > 0) {
       this.goToSection(this.currentIndex - 1);
     }
   }
-  
+
   goToSection(index, animate = true) {
     if (index < 0 || index >= this.sections.length) return;
     if (this.isScrolling && animate) return;
-    
+
     this.isScrolling = true;
     this.currentIndex = index;
     this.lastWheelTime = Date.now();
-    
+
     const section = this.sections[index];
-    
+
     // Scroll to section
     section.scrollIntoView({
       behavior: animate ? 'smooth' : 'auto',
       block: 'start'
     });
-    
+
     // Update states
     this.updateSectionStates(section, index);
-    
+
     // Reset scrolling flag
     clearTimeout(this.scrollTimeout);
     this.scrollTimeout = setTimeout(() => {
       this.isScrolling = false;
     }, animate ? 1000 : 100);
   }
-  
+
   updateSectionStates(section, index) {
     // Update sky image
     const hour = parseInt(section.dataset.hour);
     if (skyTimeLapse && hour >= 0) {
       skyTimeLapse.transitionToImage(hour);
     }
-    
+
     // Update hour nav active state
     const hourItems = document.querySelectorAll('.hour-item');
     hourItems.forEach((item) => {
@@ -317,17 +317,17 @@ class SectionScroller {
         item.classList.remove('active');
       }
     });
-    
+
     // Update active section for polaroids
     this.sections.forEach(s => s.classList.remove('active'));
     section.classList.add('active');
-    
+
     // Update hour label
     updateHourLabel(section);
-    
+
     // Update progress indicator
     updateProgressIndicator(index);
-    
+
     // Show/hide logo
     toggleLogo(index);
   }
@@ -513,7 +513,7 @@ let currentSectionIndex = 0;
 
 function navigateToSection(direction) {
   if (!sectionScroller) return;
-  
+
   if (direction === 'up') {
     sectionScroller.prev();
   } else if (direction === 'down') {
@@ -525,18 +525,18 @@ function updateHourLabel(section) {
   const hourLabelText = document.getElementById("hourLabelText");
   const navUp = document.getElementById("navUp");
   const navDown = document.getElementById("navDown");
-  
+
   if (hourLabelText && section) {
     const hour = section.dataset.hour;
     hourLabelText.textContent = hourLabels[hour] || `Hour ${hour}`;
-    
+
     // Update current index
     currentSectionIndex = sectionOrder.indexOf(hour);
-    
+
     // Update tooltips and visibility
     const prevIndex = currentSectionIndex - 1;
     const nextIndex = currentSectionIndex + 1;
-    
+
     // Handle up arrow
     if (navUp) {
       if (prevIndex >= 0) {
@@ -550,7 +550,7 @@ function updateHourLabel(section) {
         navUp.style.opacity = "0";
       }
     }
-    
+
     // Handle down arrow
     if (navDown) {
       if (nextIndex < sectionOrder.length) {
@@ -635,7 +635,7 @@ window.addEventListener('DOMContentLoaded', () => {
 function toggleLogo(sectionIndex) {
   const logo = document.querySelector('.logo');
   if (!logo) return;
-  
+
   // Hide logo on first section (index 0), show on all others
   if (sectionIndex === 0) {
     logo.classList.remove('visible');
@@ -651,7 +651,7 @@ function toggleLogo(sectionIndex) {
 function updateProgressIndicator(sectionIndex) {
   const hourNav = document.querySelector('.hour-nav');
   if (!hourNav) return;
-  
+
   const totalSections = 12;
   const progress = ((sectionIndex + 1) / totalSections) * 100;
   hourNav.style.setProperty('--nav-progress', `${progress}%`);
@@ -673,7 +673,7 @@ function setupSectionArrows() {
     // Remove any existing listeners by cloning
     const newArrow = arrow.cloneNode(true);
     arrow.parentNode.replaceChild(newArrow, arrow);
-    
+
     newArrow.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -686,7 +686,7 @@ function setupSectionArrows() {
     // Remove any existing listeners by cloning
     const newArrow = arrow.cloneNode(true);
     arrow.parentNode.replaceChild(newArrow, arrow);
-    
+
     newArrow.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -773,10 +773,10 @@ function shuffleArray(array) {
 function initPolaroidImages() {
   // Get all polaroids (both with data-random-photo and without)
   const allPolaroids = document.querySelectorAll('.polaroid');
-  
+
   allPolaroids.forEach((polaroid) => {
     const img = polaroid.querySelector('img');
-    
+
     if (img && img.src) {
       // If image is already loaded (cached)
       if (img.complete && img.naturalWidth > 0) {
@@ -786,7 +786,7 @@ function initPolaroidImages() {
         img.addEventListener('load', () => {
           polaroid.classList.add('loaded');
         });
-        
+
         // Handle error case
         img.addEventListener('error', () => {
           console.error('Failed to load image:', img.src);

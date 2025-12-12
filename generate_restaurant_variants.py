@@ -114,11 +114,11 @@ def get_lighting_params(hour):
         13: {'brightness': 1.1, 'warmth': -0.03, 'contrast': 1.3, 'saturation': 1.0, 'glow': 0.0},
         15: {'brightness': 1.0, 'warmth': 0.02, 'contrast': 1.2, 'saturation': 1.1, 'glow': 0.0},
         17: {'brightness': 0.75, 'warmth': 0.12, 'contrast': 1.25, 'saturation': 1.35, 'glow': 0.15},
-        19: {'brightness': 0.45, 'warmth': 0.1, 'contrast': 1.3, 'saturation': 1.3, 'glow': 0.35},
-        21: {'brightness': 0.3, 'warmth': 0.08, 'contrast': 1.2, 'saturation': 1.15, 'glow': 0.45},
-        23: {'brightness': 0.2, 'warmth': 0.05, 'contrast': 1.15, 'saturation': 1.1, 'glow': 0.5},
-        1: {'brightness': 0.15, 'warmth': 0.03, 'contrast': 1.1, 'saturation': 1.05, 'glow': 0.55},
-        3: {'brightness': 0.18, 'warmth': 0.04, 'contrast': 1.1, 'saturation': 1.1, 'glow': 0.5}
+        19: {'brightness': 0.55, 'warmth': 0.1, 'contrast': 1.25, 'saturation': 1.3, 'glow': 0.55},
+        21: {'brightness': 0.45, 'warmth': 0.08, 'contrast': 1.2, 'saturation': 1.2, 'glow': 0.65},
+        23: {'brightness': 0.40, 'warmth': 0.05, 'contrast': 1.2, 'saturation': 1.15, 'glow': 0.70},
+        1: {'brightness': 0.35, 'warmth': 0.03, 'contrast': 1.15, 'saturation': 1.1, 'glow': 0.75},
+        3: {'brightness': 0.35, 'warmth': 0.04, 'contrast': 1.15, 'saturation': 1.1, 'glow': 0.70}
     }
     return params.get(hour, params[13])
 
