@@ -1750,84 +1750,6 @@ html {
 }
 
 /* ========================================
-   Floating Audio Player
-   ======================================== */
-
-.audio-player {
-    position: fixed;
-    bottom: 30px;
-    right: -200px;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: rgba(74, 144, 226, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 12px 20px;
-    border-radius: 50px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    transition: right 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.audio-player:hover {
-    right: 30px;
-    transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-}
-
-.audio-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-    background: rgba(255, 255, 255, 0.2);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: var(--transition-smooth);
-    padding: 0;
-}
-
-.audio-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(1.1);
-}
-
-.audio-btn:active {
-    transform: scale(0.95);
-}
-
-.audio-info {
-    color: white;
-    font-size: 0.9rem;
-    font-weight: var(--font-weight-medium);
-    white-space: nowrap;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-@keyframes slideInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Mobile adjustments */
-@media (max-width: 768px) {
-
-    /* Hide audio player on mobile */
-    .audio-player {
-        display: none;
-    }
-}
-
-/* ========================================
    Accessibility
    ======================================== */
 
@@ -1849,8 +1771,6 @@ html {
 .fp-overflow {
     overflow: visible !important;
     pointer-events: none !important;
-}
-
 }
 
 @media (prefers-reduced-motion: reduce) {
