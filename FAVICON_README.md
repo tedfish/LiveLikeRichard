@@ -1,11 +1,11 @@
-# Live Like Richard - Favicon Implementation
+# Live Like Rich - Favicon Implementation
 
 ## 🌟 Design Concept
 
-The favicon combines a **radiant sun** with a **heart** at its center, perfectly capturing the essence of Richard's legacy:
+The favicon combines a **radiant sun** with a **heart** at its center, perfectly capturing the essence of Rich's legacy:
 
 - **Golden Sun Rays**: Represents the 24-hour journey through the site, from sunrise to sunset
-- **Warm Glow**: Symbolizes Richard's infectious energy and magnetic personality
+- **Warm Glow**: Symbolizes Rich's infectious energy and magnetic personality
 - **Red Heart**: Represents his devotion to family, faith, and community giving
 - **Radiant Design**: Reflects the warmth and light he brought to everyone's life
 
@@ -82,5 +82,5 @@ The design uses PIL (Pillow) to generate PNG versions from mathematical curves.
 ---
 
 **Created**: November 11, 2025  
-**For**: Live Like Richard Memorial Website  
+**For**: Live Like Rich Memorial Website  
 **Symbol**: ☀️❤️ - Warmth, Love, Legacy

@@ -262,10 +262,10 @@ def get_lighting_adjustment(hour):
         return (0.2, (15, 20, 50), 0.7)
 
 # Load the background image
-background_path = "images/richard-main.jpg"
+background_path = "images/rich-main.jpg"
 if not os.path.exists(background_path):
     print(f"Error: Background image not found at {background_path}")
-    print("Please ensure richard-main.jpg exists in the images/ directory")
+    print("Please ensure rich-main.jpg exists in the images/ directory")
     exit(1)
 
 base_img = Image.open(background_path)
@@ -334,4 +334,4 @@ for hour in range(24):
 
 print(f"\n✓ Successfully generated 24 sky images in {sky_dir}/")
 print("Images range from 00.jpg (midnight) to 23.jpg (11 PM)")
-print("Each image overlays time-of-day lighting on richard-main.jpg")
+print("Each image overlays time-of-day lighting on rich-main.jpg")

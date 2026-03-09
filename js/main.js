@@ -823,4 +823,4 @@ setTimeout(() => {
 // ========================================
 // Now handled by SectionScroller.updateSectionStates()
 
-console.log("Live Like Richard website initialized ✓");
+console.log("Live Like Rich website initialized ✓");

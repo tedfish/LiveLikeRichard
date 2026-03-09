@@ -79,7 +79,7 @@ Each section follows this pattern:
 
 **Content Mapping:**
 - Hour 00: Hero/Introduction
-- Hour 06-08: About Richard
+- Hour 06-08: About Rich
 - Hour 09-15: Mission and partner organizations
 - Hour 16-17: Events and golden hour
 - Hour 18-20: Gallery and community stories
@@ -96,7 +96,7 @@ Each section follows this pattern:
 ### File Organization
 
 ```
-LiveLikeRichard/
+LiveLikeRich/
 ├── index.html              # Single HTML file with all 24 hour sections
 ├── css/styles.css          # Complete styling with CSS variables
 ├── js/
@@ -105,7 +105,7 @@ LiveLikeRichard/
 ├── images/
 │   ├── sky/               # 24 hourly images (00.jpg-23.jpg)
 │   ├── gallery/           # Gallery photos (not yet implemented)
-│   └── richard-main.jpg   # Hero image
+│   └── rich-main.jpg   # Hero image
 ├── audio/
 │   └── melody.mid         # Generated MIDI file
 ├── generate_sky_images.py # Python script to create realistic sky gradients

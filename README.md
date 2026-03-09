@@ -1,6 +1,6 @@
-# Live Like Richard Website
+# Live Like Rich Website
 
-A charitable foundation website honoring Richard Ham's legacy through community impact, featuring a unique time-lapse sky background that transitions through 24 hours of images.
+A charitable foundation website honoring Rich Ham's legacy through community impact, featuring a unique time-lapse sky background that transitions through 24 hours of images.
 
 ## 🌟 Features
 
@@ -14,7 +14,7 @@ A charitable foundation website honoring Richard Ham's legacy through community 
 ## 📁 Project Structure
 
 ```
-LiveLikeRichard/
+LiveLikeRich/
 ├── index.html              # Main HTML file
 ├── css/
 │   └── styles.css          # All website styles
@@ -23,7 +23,7 @@ LiveLikeRichard/
 ├── images/
 │   ├── sky/                # 24 hourly sky images (00.jpg - 23.jpg)
 │   ├── gallery/            # Gallery photos
-│   ├── richard-main.jpg    # Main photo of Richard Ham
+│   ├── rich-main.jpg    # Main photo of Rich Ham
 │   └── ...                 # Other images
 ├── fonts/                  # Custom fonts (if needed)
 └── README.md               # This file
@@ -53,8 +53,8 @@ The hero section requires 24 hourly sky images taken from the business location:
 
 ### 2. Add Content Images
 
-#### Main Photo of Richard
-- Add `richard-main.jpg` to `images/` directory
+#### Main Photo of Rich
+- Add `rich-main.jpg` to `images/` directory
 - Recommended: Professional portrait, 800x800px or larger
 
 #### Gallery Images
@@ -78,7 +78,7 @@ Open `index.html` in a web browser to test:
 
 ```bash
 # Option 1: Simple Python server
-cd ~/LiveLikeRichard
+cd ~/LiveLikeRich
 python3 -m http.server 8000
 # Visit: http://localhost:8000
 
@@ -140,8 +140,8 @@ The website uses CSS variables for easy color customization. Edit `css/styles.cs
 ### Option 1: Netlify (Recommended - Free)
 
 1. Sign up at [netlify.com](https://netlify.com)
-2. Drag and drop the `LiveLikeRichard` folder
-3. Connect domain `LiveLikeRichard.com`
+2. Drag and drop the `LiveLikeRich` folder
+3. Connect domain `LiveLikeRich.com`
 4. Enable HTTPS (automatic)
 
 ### Option 2: GitHub Pages (Free)
@@ -160,7 +160,7 @@ The website uses CSS variables for easy color customization. Edit `css/styles.cs
 
 ## 🔗 Domain Setup
 
-The domain `LiveLikeRichard.com` is already acquired. To connect it:
+The domain `LiveLikeRich.com` is already acquired. To connect it:
 
 1. Access domain registrar account
 2. Update DNS records:
@@ -235,7 +235,7 @@ The website includes:
 1. **Update Meta Tags** in `index.html`:
    ```html
    <meta name="description" content="Your custom description">
-   <meta property="og:title" content="Live Like Richard">
+   <meta property="og:title" content="Live Like Rich">
    <meta property="og:image" content="images/social-share.jpg">
    ```
 
@@ -295,7 +295,7 @@ Copy any section from `index.html` and paste where needed. Update classes and co
 ## 📞 Next Steps
 
 1. ✅ Add 24 sky images to `images/sky/`
-2. ✅ Add main photo of Richard
+2. ✅ Add main photo of Rich
 3. ✅ Update all text content in HTML
 4. ✅ Customize colors in CSS
 5. ✅ Set up MailChimp integration
@@ -307,8 +307,8 @@ Copy any section from `index.html` and paste where needed. Update classes and co
 
 ## 📄 License & Credits
 
-Created for the Live Like Richard Foundation
-Honoring Richard Ham's Legacy
+Created for the Live Like Rich Foundation
+Honoring Rich Ham's Legacy
 
 **Built with:**
 - Vanilla JavaScript (no frameworks needed)
